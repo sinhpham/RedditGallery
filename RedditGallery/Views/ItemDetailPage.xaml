@@ -31,7 +31,7 @@
                   to show details for the current item
         -->
         <Grid Grid.RowSpan="2" x:Name="contentRegion">
-            <ScrollViewer ZoomMode="Enabled">
+            <ScrollViewer ZoomMode="Enabled" HorizontalScrollBarVisibility="Hidden" VerticalScrollBarVisibility="Hidden">
                 <Image Name="_img" Source="{Binding Item.ImagePath}"/>
             </ScrollViewer>
         </Grid>
