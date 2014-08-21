@@ -82,7 +82,10 @@ namespace RedditGallery.ViewModels
             if (u.Host == "i.imgur.com")
             {
                 var strArr = u.AbsolutePath.Split('.');
-                ret = "http://" + u.Host + strArr[0] + "m." + strArr[1];
+                if (strArr.Length == 2)
+                {
+                    ret = "http://" + u.Host + strArr[0] + "m." + strArr[1];
+                }
             }
 
             return ret;
