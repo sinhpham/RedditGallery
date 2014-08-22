@@ -51,9 +51,9 @@
             ItemClick="ItemView_ItemClick">
             <GridView.ItemTemplate>
                 <DataTemplate>
-                    <Grid HorizontalAlignment="Left" Width="250" Height="250">
+                    <Grid HorizontalAlignment="Left" Width="240" Height="180">
                         <Border Background="{ThemeResource ListViewItemPlaceholderBackgroundThemeBrush}">
-                            <Image Source="{Binding Thumbnail}" Stretch="UniformToFill" AutomationProperties.Name="{Binding Title}"/>
+                            <Image Source="{Binding Thumbnail}" Stretch="Uniform" AutomationProperties.Name="{Binding Title}"/>
                         </Border>
                     </Grid>
                 </DataTemplate>
@@ -72,7 +72,7 @@
                         AutomationProperties.Name="Back"
                         AutomationProperties.AutomationId="BackButton"
                         AutomationProperties.ItemType="Navigation Button"/>
-            <TextBox x:Name="pageTitle" Text="{Binding SubReddit, Mode=TwoWay}" Height="60" FontSize="32" Grid.Column="1" 
+            <TextBox x:Name="pageTitle" Text="{Binding SubReddit, Mode=TwoWay}" Height="40" FontSize="20" Grid.Column="1" 
                         TextWrapping="NoWrap" VerticalAlignment="Bottom" Margin="0,0,30,40"/>
         </Grid>
     </Grid>
