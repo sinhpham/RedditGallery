@@ -19,6 +19,12 @@ namespace RedditGallery.ViewModels
         {
             _images = new PaginatedCollection<RedditImg>(async (pc, count) =>
             {
+                var retList = new List<RedditImg>();
+                if (string.Equals("null", pc.NextPath, StringComparison.Ordinal))
+                {
+                    return retList;
+                }
+
                 var link = string.Format("http://www.reddit.com/r/{0}/new.json?after={1}", SubReddit, pc.NextPath) ??
                     string.Format("http://www.reddit.com/r/{0}/new.json", SubReddit);
 
@@ -27,9 +33,16 @@ namespace RedditGallery.ViewModels
                 var jsonObject = JsonObject.Parse(jsonText);
                 var jArr = jsonObject["data"].GetObject()["children"].GetArray();
 
-                pc.NextPath = jsonObject["data"].GetObject()["after"].GetString();
+                try
+                {
+                    pc.NextPath = jsonObject["data"].GetObject()["after"].GetString();
+                }
+                catch (InvalidOperationException)
+                {
+                    pc.NextPath = "null";
+                }
 
-                var retList = new List<RedditImg>();
+                
                 foreach (var itemValue in jArr)
                 {
                     var itemObject = itemValue.GetObject()["data"].GetObject();
