@@ -14,6 +14,7 @@ using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
 using RedditGallery.Models;
+using System.Diagnostics;
 
 // The Item Detail Page item template is documented at http://go.microsoft.com/fwlink/?LinkId=234232
 
@@ -77,9 +78,6 @@ namespace RedditGallery.Views
 
             var item = (RedditImg)e.NavigationParameter;
             this.DefaultViewModel["Item"] = item;
-
-            _img.MaxHeight =Window.Current.Bounds.Height;
-            _img.MaxWidth =  Window.Current.Bounds.Width;
         }
 
         #region NavigationHelper registration
@@ -104,5 +102,36 @@ namespace RedditGallery.Views
         }
 
         #endregion
+
+        private void _img_ImageOpened(object sender, RoutedEventArgs e)
+        {
+            var img = (Image)sender;
+            img.MaxHeight = Window.Current.Bounds.Height;
+            img.MaxWidth = Window.Current.Bounds.Width;
+
+            var sv = (ScrollViewer)((FrameworkElement)img.Parent).Parent;
+            sv.ChangeView(null, 100, null);
+
+            EventHandler<ScrollViewerViewChangedEventArgs> ev = null;
+            ev = new EventHandler<ScrollViewerViewChangedEventArgs>((s, arg) =>
+            {
+                if (sv.VerticalOffset == 0)
+                {
+                    sv.ViewChanged -= ev;
+
+
+                    Windows.UI.Core.CoreWindow.GetForCurrentThread().Dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.Normal, () =>
+                    {
+
+                        navigationHelper.GoBackCommand.Execute(null);
+                    });
+
+
+                    Debug.WriteLine("need go back");
+                }
+            });
+
+            sv.ViewChanged += ev;
+        }
     }
 }
