@@ -64,13 +64,16 @@ namespace RedditGallery.ViewModels
         }
 
         private PaginatedCollection<RedditImg> _images;
-
-        /// <summary>
-        /// This can be changed to a strongly typed view model.
-        /// </summary>
         public PaginatedCollection<RedditImg> Images
         {
             get { return this._images; }
+        }
+
+        RedditImg _selectedImg;
+        public RedditImg SelectedImg
+        {
+            get { return _selectedImg; }
+            set { SetProperty(ref _selectedImg, value); }
         }
 
         string _subReddit="pics";

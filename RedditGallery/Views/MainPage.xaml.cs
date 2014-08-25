@@ -27,12 +27,10 @@ namespace RedditGallery.Views
     public sealed partial class MainPage : Page
     {
         private NavigationHelper navigationHelper;
-        private MainVM _vm = new MainVM();
-
 
         public MainVM VM
         {
-            get { return this._vm; }
+            get { return App.MainVM; }
         }
 
         /// <summary>
@@ -93,8 +91,8 @@ namespace RedditGallery.Views
 
         private void ItemView_ItemClick(object sender, ItemClickEventArgs e)
         {
-            var selectedItem = (RedditImg)e.ClickedItem;
-            this.Frame.Navigate(typeof(ItemDetailPage), selectedItem);
+            VM.SelectedImg = (RedditImg)e.ClickedItem;
+            this.Frame.Navigate(typeof(ItemDetailPage));
         }
 
     }

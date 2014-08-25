@@ -15,6 +15,7 @@ using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
 using RedditGallery.Models;
 using System.Diagnostics;
+using RedditGallery.ViewModels;
 
 // The Item Detail Page item template is documented at http://go.microsoft.com/fwlink/?LinkId=234232
 
@@ -27,14 +28,10 @@ namespace RedditGallery.Views
     public sealed partial class ItemDetailPage : Page
     {
         private NavigationHelper navigationHelper;
-        private ObservableDictionary defaultViewModel = new ObservableDictionary();
 
-        /// <summary>
-        /// This can be changed to a strongly typed view model.
-        /// </summary>
-        public ObservableDictionary DefaultViewModel
+        public MainVM VM
         {
-            get { return this.defaultViewModel; }
+            get { return App.MainVM; }
         }
 
         /// <summary>
@@ -76,8 +73,6 @@ namespace RedditGallery.Views
             // TODO: Assign a collection of bindable items to this.DefaultViewModel["Items"]
             // TODO: Assign the selected item to this.flipView.SelectedItem
 
-            var item = (RedditImg)e.NavigationParameter;
-            this.DefaultViewModel["Item"] = item;
         }
 
         #region NavigationHelper registration

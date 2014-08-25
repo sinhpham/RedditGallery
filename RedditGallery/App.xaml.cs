@@ -1,4 +1,5 @@
-﻿using RedditGallery.Views;
+﻿using RedditGallery.ViewModels;
+using RedditGallery.Views;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -33,6 +34,19 @@ namespace RedditGallery
         {
             this.InitializeComponent();
             this.Suspending += OnSuspending;
+        }
+
+        static MainVM _mainVM;
+        public static MainVM MainVM
+        {
+            get
+            {
+                if (_mainVM == null)
+                {
+                    _mainVM = new MainVM();
+                }
+                return _mainVM;
+            }
         }
 
         /// <summary>
