@@ -12,6 +12,6 @@ namespace RedditGallery.Models
         public string Thumbnail { get; set; }
 
         public string ImagePath { get; set; }
-
+        public string Permalink { get; set; }
     }
 }

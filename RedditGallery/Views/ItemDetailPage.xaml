@@ -12,10 +12,10 @@
 
     <Page.BottomAppBar>
         <CommandBar>
-            <AppBarButton Label="Copy Link" Icon="Copy"/>
-            <AppBarButton Label="Copy Reddit Link" Icon="Copy"/>
-            <AppBarButton Label="Open Link" Icon="World" />
-            <AppBarButton Label="Open Reddit Link" Icon="World"/>
+            <AppBarButton Label="Copy Link" Icon="Copy" Command="{Binding CopyLinkCmd}"/>
+            <AppBarButton Label="Copy Reddit Link" Icon="Copy" Command="{Binding CopyRedditLinkCmd}"/>
+            <AppBarButton Label="Open Link" Icon="World" Command="{Binding OpenLinkCmd}"/>
+            <AppBarButton Label="Open Reddit Link" Icon="World" Command="{Binding OpenRedditLinkCmd}"/>
         </CommandBar>
     </Page.BottomAppBar>
     <!--

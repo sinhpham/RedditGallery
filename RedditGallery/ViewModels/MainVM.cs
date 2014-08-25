@@ -1,4 +1,5 @@
-﻿using RedditGallery.Models;
+﻿using RedditGallery.Common;
+using RedditGallery.Models;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -49,13 +50,14 @@ namespace RedditGallery.ViewModels
 
                     var url = itemObject["url"].GetString();
                     var thumbnail = GetThumbnailPathFromUrl(url) ?? itemObject["thumbnail"].GetString();
-
+                    var permalink = "http://reddit.com" + itemObject["permalink"].GetString();
 
                     var item = new RedditImg()
                     {
                         Title = itemObject["title"].GetString(),
                         Thumbnail = thumbnail,
-                        ImagePath = url
+                        ImagePath = url,
+                        Permalink = permalink,
                     };
                     retList.Add(item);
                 }
@@ -74,6 +76,74 @@ namespace RedditGallery.ViewModels
         {
             get { return _selectedImg; }
             set { SetProperty(ref _selectedImg, value); }
+        }
+
+        RelayCommand _copyLinkCmd;
+        public RelayCommand CopyLinkCmd
+        {
+            get
+            {
+                if (_copyLinkCmd == null)
+                {
+                    _copyLinkCmd = new RelayCommand(() =>
+                    {
+                        var dp = new Windows.ApplicationModel.DataTransfer.DataPackage();
+                        dp.SetText(SelectedImg.ImagePath);
+                        Windows.ApplicationModel.DataTransfer.Clipboard.SetContent(dp);
+                    });
+                }
+                return _copyLinkCmd;
+            }
+        }
+
+        RelayCommand _copyRedditLinkCmd;
+        public RelayCommand CopyRedditLinkCmd
+        {
+            get
+            {
+                if (_copyRedditLinkCmd == null)
+                {
+                    _copyRedditLinkCmd = new RelayCommand(() =>
+                    {
+                        var dp = new Windows.ApplicationModel.DataTransfer.DataPackage();
+                        dp.SetText(SelectedImg.Permalink);
+                        Windows.ApplicationModel.DataTransfer.Clipboard.SetContent(dp);
+                    });
+                }
+                return _copyRedditLinkCmd;
+            }
+        }
+
+        RelayCommand _openLinkCmd;
+        public RelayCommand OpenLinkCmd
+        {
+            get
+            {
+                if (_openLinkCmd == null)
+                {
+                    _openLinkCmd = new RelayCommand(() =>
+                    {
+                        Windows.System.Launcher.LaunchUriAsync(new Uri(SelectedImg.ImagePath));
+                    });
+                }
+                return _openLinkCmd;
+            }
+        }
+
+        RelayCommand _openRedditLinkCmd;
+        public RelayCommand OpenRedditLinkCmd
+        {
+            get
+            {
+                if (_openRedditLinkCmd == null)
+                {
+                    _openRedditLinkCmd = new RelayCommand(() =>
+                    {
+                        Windows.System.Launcher.LaunchUriAsync(new Uri(SelectedImg.Permalink));
+                    });
+                }
+                return _openRedditLinkCmd;
+            }
         }
 
         string _subReddit="pics";
