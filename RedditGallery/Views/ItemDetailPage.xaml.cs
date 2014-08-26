@@ -72,7 +72,6 @@ namespace RedditGallery.Views
             // TODO: Assign a bindable group to this.DefaultViewModel["Group"]
             // TODO: Assign a collection of bindable items to this.DefaultViewModel["Items"]
             // TODO: Assign the selected item to this.flipView.SelectedItem
-
         }
 
         #region NavigationHelper registration
@@ -116,13 +115,16 @@ namespace RedditGallery.Views
             EventHandler<ScrollViewerViewChangedEventArgs> ev = null;
             ev = new EventHandler<ScrollViewerViewChangedEventArgs>((s, arg) =>
             {
+                if (arg.IsIntermediate == true || sv.ZoomFactor < 1)
+                {
+                    return;
+                }
                 if (sv.VerticalOffset == 0)
                 {
                     sv.ViewChanged -= ev;
 
                     Windows.UI.Core.CoreWindow.GetForCurrentThread().Dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.Normal, () =>
                     {
-
                         navigationHelper.GoBackCommand.Execute(null);
                     });
                     Debug.WriteLine("need go back");

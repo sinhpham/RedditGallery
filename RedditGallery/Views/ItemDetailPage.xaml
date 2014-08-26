@@ -39,7 +39,7 @@
                   to show details for the current item
         -->
         <Grid Grid.RowSpan="2" x:Name="contentRegion">
-            <ScrollViewer ZoomMode="Enabled" HorizontalScrollBarVisibility="Hidden" VerticalScrollBarVisibility="Hidden">
+            <ScrollViewer Name="_sv" ZoomMode="Enabled" HorizontalScrollBarVisibility="Hidden" VerticalScrollBarVisibility="Hidden" MinZoomFactor="0.75">
                 <Grid Name="_imgGrid" Background="CadetBlue">
                     <Grid.RowDefinitions>
                         <RowDefinition Height="100"/>
