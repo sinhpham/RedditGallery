@@ -45,7 +45,7 @@
                         <RowDefinition Height="100"/>
                         <RowDefinition Height="*"/>
                     </Grid.RowDefinitions>
-                    <Image Name="_img" Grid.Row="1" Source="{Binding SelectedImg.ImagePath}" ImageOpened="_img_ImageOpened" SizeChanged="_img_SizeChanged"/>
+                    <Image Name="_img" Grid.Row="1" Source="{Binding SelectedImg.ImagePath}" ImageOpened="_img_ImageOpened"/>
                 </Grid>
             </ScrollViewer>
         </Grid>

@@ -72,6 +72,9 @@ namespace RedditGallery.Views
             // TODO: Assign a bindable group to this.DefaultViewModel["Group"]
             // TODO: Assign a collection of bindable items to this.DefaultViewModel["Items"]
             // TODO: Assign the selected item to this.flipView.SelectedItem
+
+            _img.MaxHeight = Window.Current.Bounds.Height;
+            _img.MaxWidth = Window.Current.Bounds.Width;
         }
 
         #region NavigationHelper registration
@@ -97,19 +100,11 @@ namespace RedditGallery.Views
 
         #endregion
 
-
-        bool _imgOpened = false;
         private void _img_ImageOpened(object sender, RoutedEventArgs e)
         {
-            _imgOpened = true;
+            _imgGrid.Width = _img.ActualWidth;
 
-            var img = (Image)sender;
-            img.MaxHeight = Window.Current.Bounds.Height;
-            img.MaxWidth = Window.Current.Bounds.Width;
-
-            
-
-            var sv = (ScrollViewer)((FrameworkElement)img.Parent).Parent;
+            var sv = (ScrollViewer)((FrameworkElement)_img.Parent).Parent;
             sv.ChangeView(null, 100, null);
 
             EventHandler<ScrollViewerViewChangedEventArgs> ev = null;
@@ -132,15 +127,6 @@ namespace RedditGallery.Views
             });
 
             sv.ViewChanged += ev;
-        }
-
-        private void _img_SizeChanged(object sender, SizeChangedEventArgs e)
-        {
-            if (_imgOpened)
-            {
-                _imgGrid.Width = _img.ActualWidth;
-                _imgGrid.Height = _img.ActualHeight + 100;
-            }
         }
     }
 }
