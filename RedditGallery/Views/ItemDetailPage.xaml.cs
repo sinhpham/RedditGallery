@@ -98,11 +98,17 @@ namespace RedditGallery.Views
 
         #endregion
 
+
+        bool _imgOpened = false;
         private void _img_ImageOpened(object sender, RoutedEventArgs e)
         {
+            _imgOpened = true;
+
             var img = (Image)sender;
             img.MaxHeight = Window.Current.Bounds.Height;
             img.MaxWidth = Window.Current.Bounds.Width;
+
+            
 
             var sv = (ScrollViewer)((FrameworkElement)img.Parent).Parent;
             sv.ChangeView(null, 100, null);
@@ -114,19 +120,25 @@ namespace RedditGallery.Views
                 {
                     sv.ViewChanged -= ev;
 
-
                     Windows.UI.Core.CoreWindow.GetForCurrentThread().Dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.Normal, () =>
                     {
 
                         navigationHelper.GoBackCommand.Execute(null);
                     });
-
-
                     Debug.WriteLine("need go back");
                 }
             });
 
             sv.ViewChanged += ev;
+        }
+
+        private void _img_SizeChanged(object sender, SizeChangedEventArgs e)
+        {
+            if (_imgOpened)
+            {
+                _imgGrid.Width = _img.ActualWidth;
+                _imgGrid.Height = _img.ActualHeight + 100;
+            }
         }
     }
 }

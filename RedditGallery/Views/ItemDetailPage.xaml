@@ -40,10 +40,13 @@
         -->
         <Grid Grid.RowSpan="2" x:Name="contentRegion">
             <ScrollViewer ZoomMode="Enabled" HorizontalScrollBarVisibility="Hidden" VerticalScrollBarVisibility="Hidden">
-                <StackPanel>
-                    <Rectangle Height="100"/>
-                    <Image Name="_img" Source="{Binding SelectedImg.ImagePath}" ImageOpened="_img_ImageOpened"/>
-                </StackPanel>
+                <Grid Name="_imgGrid" Background="CadetBlue">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="100"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+                    <Image Name="_img" Grid.Row="1" Source="{Binding SelectedImg.ImagePath}" ImageOpened="_img_ImageOpened" SizeChanged="_img_SizeChanged"/>
+                </Grid>
             </ScrollViewer>
         </Grid>
 
