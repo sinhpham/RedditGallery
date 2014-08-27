@@ -26,8 +26,8 @@ namespace RedditGallery.ViewModels
                     return retList;
                 }
 
-                var link = string.Format("http://www.reddit.com/r/{0}/new.json?after={1}", SubReddit, pc.NextPath) ??
-                    string.Format("http://www.reddit.com/r/{0}/new.json", SubReddit);
+                var link = string.Format("http://www.reddit.com/r/{0}/new.json?after={1}&limit={2}", SubReddit, pc.NextPath, count) ??
+                    string.Format("http://www.reddit.com/r/{0}/new.json?limit={1}", SubReddit, count);
 
                 var hc = new HttpClient();
                 var jsonText = await hc.GetStringAsync(link);
