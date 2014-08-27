@@ -121,5 +121,19 @@ namespace RedditGallery.Views
             VM.SubReddit = newSub;
         }
 
+        private void Rectangle_Tapped(object sender, TappedRoutedEventArgs e)
+        {
+            if (_expanded)
+            {
+                _hideMenu.Begin();
+                _expanded = false;
+            }
+            else
+            {
+                _showMenu.Begin();
+                _expanded = true;
+            }
+        }
+
     }
 }
