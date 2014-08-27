@@ -102,12 +102,35 @@
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="50"/>
                 <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="Auto"/>
             </Grid.ColumnDefinitions>
             <Button x:Name="backButton"
                         Style="{StaticResource NavigationBackButtonNormalStyle}"
                         VerticalAlignment="Center" Click="backButton_Click"/>
             <TextBlock x:Name="pageTitle" Text="{Binding SubReddit, Mode=TwoWay}" FontSize="32" Grid.Column="1" 
                         TextWrapping="NoWrap" VerticalAlignment="Center"/>
+            <Button Grid.Column="2" Content="Sort" >
+                <Button.Flyout>
+                    <MenuFlyout>
+                        <MenuFlyoutItem Text="New"/>
+                        <MenuFlyoutItem Text="Hot"/>
+                        <MenuFlyoutItem Text="Top"/>
+                        <MenuFlyoutItem Text="Controversial"/>
+                    </MenuFlyout>
+                </Button.Flyout>
+            </Button>
+            <Button Grid.Column="3" Content="Time" >
+                <Button.Flyout>
+                    <MenuFlyout>
+                        <MenuFlyoutItem Text="Hour"/>
+                        <MenuFlyoutItem Text="Day"/>
+                        <MenuFlyoutItem Text="Week"/>
+                        <MenuFlyoutItem Text="Month"/>
+                        <MenuFlyoutItem Text="All"/>
+                    </MenuFlyout>
+                </Button.Flyout>
+            </Button>
         </Grid>
     </Grid>
 </Page>
