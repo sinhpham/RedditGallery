@@ -3,6 +3,7 @@ using RedditGallery.Models;
 using RedditGallery.ViewModels;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
@@ -14,6 +15,7 @@ using Windows.UI.Xaml.Controls.Primitives;
 using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
+using Windows.UI.Xaml.Media.Animation;
 using Windows.UI.Xaml.Navigation;
 
 // The Items Page item template is documented at http://go.microsoft.com/fwlink/?LinkId=234233
@@ -48,6 +50,8 @@ namespace RedditGallery.Views
             this.navigationHelper = new NavigationHelper(this);
             this.navigationHelper.LoadState += navigationHelper_LoadState;
             this.NavigationCacheMode = Windows.UI.Xaml.Navigation.NavigationCacheMode.Enabled;
+
+            
         }
 
         /// <summary>
@@ -93,6 +97,28 @@ namespace RedditGallery.Views
         {
             VM.SelectedImg = (RedditImg)e.ClickedItem;
             this.Frame.Navigate(typeof(ItemDetailPage));
+        }
+
+        bool _expanded = true;
+        private void backButton_Click(object sender, RoutedEventArgs e)
+        {
+            if (_expanded)
+            {
+                _hideMenu.Begin();
+                _expanded = false;
+            }
+            else
+            {
+                _showMenu.Begin();
+                _expanded = true;
+            }
+        }
+
+        private void ListView_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            Debug.WriteLine(e.AddedItems[0].ToString());
+            var newSub = e.AddedItems[0].ToString();
+            VM.SubReddit = newSub;
         }
 
     }

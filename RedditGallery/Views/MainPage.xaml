@@ -18,6 +18,26 @@
 
         <!-- TODO: Delete this line if the key AppName is declared in App.xaml -->
         <x:String x:Key="AppName">My Application</x:String>
+        <Storyboard x:Name="_hideMenu">
+            <DoubleAnimation
+              Storyboard.TargetName="_menu"
+              Storyboard.TargetProperty="Width"
+              From="250" To="0" Duration="0:0:0.3" EnableDependentAnimation="True">
+                <DoubleAnimation.EasingFunction>
+                    <CircleEase EasingMode="EaseOut"/>
+                </DoubleAnimation.EasingFunction>
+            </DoubleAnimation>
+        </Storyboard>
+        <Storyboard x:Name="_showMenu">
+            <DoubleAnimation
+              Storyboard.TargetName="_menu"
+              Storyboard.TargetProperty="Width"
+              From="0" To="250" Duration="0:0:0.3" EnableDependentAnimation="True">
+                <DoubleAnimation.EasingFunction>
+                    <CircleEase EasingMode="EaseOut"/>
+                </DoubleAnimation.EasingFunction>
+            </DoubleAnimation>
+        </Storyboard>
     </Page.Resources>
 
     <!--
@@ -32,9 +52,25 @@
             </TransitionCollection>
         </Grid.ChildrenTransitions>
         <Grid.RowDefinitions>
-            <RowDefinition Height="140"/>
+            <RowDefinition Height="60"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+
+        <Grid Name="_menu" Width="250" Grid.RowSpan="2" >
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+            <TextBlock Text="Reddit Gallery" FontSize="32" Margin="20, 20, 0, 0"/>
+            <ListView  Grid.Row="1" ItemsSource="{Binding SubReddits}" SelectionChanged="ListView_SelectionChanged"/>
+            <TextBox Grid.Row="2" Text="{Binding SubReddit, Mode=TwoWay}"/>
+        </Grid>
+
 
         <!-- Horizontal scrolling grid -->
         <GridView
@@ -43,6 +79,7 @@
             AutomationProperties.Name="Items"
             TabIndex="1"
             Grid.RowSpan="2"
+            Grid.Column="1"
             Padding="116,136,116,46"
             ItemsSource="{Binding Source={StaticResource itemsViewSource}}"
             SelectionMode="None"
@@ -61,19 +98,16 @@
         </GridView>
 
         <!-- Back button and page title -->
-        <Grid>
+        <Grid Grid.Column="1" Background="DodgerBlue">
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="120"/>
+                <ColumnDefinition Width="50"/>
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
-            <Button x:Name="backButton" Margin="39,59,39,0" Command="{Binding NavigationHelper.GoBackCommand, ElementName=pageRoot}"
+            <Button x:Name="backButton"
                         Style="{StaticResource NavigationBackButtonNormalStyle}"
-                        VerticalAlignment="Top"
-                        AutomationProperties.Name="Back"
-                        AutomationProperties.AutomationId="BackButton"
-                        AutomationProperties.ItemType="Navigation Button"/>
-            <TextBox x:Name="pageTitle" Text="{Binding SubReddit, Mode=TwoWay}" Height="40" FontSize="20" Grid.Column="1" 
-                        TextWrapping="NoWrap" VerticalAlignment="Bottom" Margin="0,0,30,40"/>
+                        VerticalAlignment="Center" Click="backButton_Click"/>
+            <TextBlock x:Name="pageTitle" Text="{Binding SubReddit, Mode=TwoWay}" FontSize="32" Grid.Column="1" 
+                        TextWrapping="NoWrap" VerticalAlignment="Center"/>
         </Grid>
     </Grid>
 </Page>

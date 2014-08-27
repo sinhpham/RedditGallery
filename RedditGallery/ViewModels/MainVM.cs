@@ -63,6 +63,10 @@ namespace RedditGallery.ViewModels
                 }
                 return retList;
             });
+
+            SubReddits.Add("pics");
+            SubReddits.Add("carporn");
+            SubReddits.Add("spaceporn");
         }
 
         private PaginatedCollection<RedditImg> _images;
@@ -158,6 +162,12 @@ namespace RedditGallery.ViewModels
                     Images.NextPath = null;
                 }
             }
+        }
+
+        ObservableCollection<string> _subReddits = new ObservableCollection<string>();
+        public ObservableCollection<string> SubReddits
+        {
+            get { return _subReddits; }
         }
 
         private string GetThumbnailPathFromUrl(string inputUrl)
