@@ -11,12 +11,6 @@
     mc:Ignorable="d">
 
     <Page.Resources>
-        <!-- Collection of items displayed by this page -->
-        <CollectionViewSource
-        x:Name="itemsViewSource"
-        Source="{Binding Images}"/>
-
-        <!-- TODO: Delete this line if the key AppName is declared in App.xaml -->
         <x:String x:Key="AppName">My Application</x:String>
         <Storyboard x:Name="_hideMenu">
             <DoubleAnimation
@@ -53,7 +47,31 @@
                 <RowDefinition Height="Auto"/>
             </Grid.RowDefinitions>
             <TextBlock Text="Reddit Gallery" FontSize="32" Margin="0, 20, 0, 0" HorizontalAlignment="Center"/>
-            <ListView  Grid.Row="1" ItemsSource="{Binding SubReddits}" SelectionChanged="ListView_SelectionChanged"/>
+            <ListView  Grid.Row="1" ItemsSource="{Binding SubReddits}" SelectionChanged="ListView_SelectionChanged">
+            	<ListView.Resources>
+            		<Style x:Key="ListViewItemStyle1" TargetType="ListViewItem">
+            			<Setter Property="FontFamily" Value="{ThemeResource ContentControlThemeFontFamily}"/>
+            			<Setter Property="FontSize" Value="{ThemeResource ControlContentThemeFontSize}"/>
+            			<Setter Property="Background" Value="Transparent"/>
+            			<Setter Property="TabNavigation" Value="Local"/>
+            			<Setter Property="IsHoldingEnabled" Value="True"/>
+            			<Setter Property="Margin" Value="0,0,18,2"/>
+            			<Setter Property="HorizontalContentAlignment" Value="Left"/>
+            			<Setter Property="VerticalContentAlignment" Value="Top"/>
+            			<Setter Property="Template">
+            				<Setter.Value>
+            					<ControlTemplate TargetType="ListViewItem">
+            						<ListViewItemPresenter CheckHintBrush="{ThemeResource ListViewItemCheckHintThemeBrush}" CheckBrush="{ThemeResource ListViewItemCheckThemeBrush}" ContentMargin="4" ContentTransitions="{TemplateBinding ContentTransitions}" CheckSelectingBrush="{ThemeResource ListViewItemCheckSelectingThemeBrush}" DragForeground="{ThemeResource ListViewItemDragForegroundThemeBrush}" DragOpacity="{ThemeResource ListViewItemDragThemeOpacity}" DragBackground="{ThemeResource ListViewItemDragBackgroundThemeBrush}" DisabledOpacity="{ThemeResource ListViewItemDisabledThemeOpacity}" FocusBorderBrush="{ThemeResource ListViewItemFocusBorderThemeBrush}" HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}" Padding="{TemplateBinding Padding}" PointerOverBackgroundMargin="1" PlaceholderBackground="{ThemeResource ListViewItemPlaceholderBackgroundThemeBrush}" PointerOverBackground="{ThemeResource ListViewItemPointerOverBackgroundThemeBrush}" ReorderHintOffset="{ThemeResource ListViewItemReorderHintThemeOffset}" SelectedPointerOverBorderBrush="{ThemeResource ListViewItemSelectedPointerOverBorderThemeBrush}" SelectionCheckMarkVisualEnabled="True" SelectedForeground="{ThemeResource ListViewItemSelectedForegroundThemeBrush}" SelectedPointerOverBackground="{ThemeResource ListViewItemSelectedPointerOverBackgroundThemeBrush}" SelectedBorderThickness="{ThemeResource ListViewItemCompactSelectedBorderThemeThickness}" VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"/>
+            					</ControlTemplate>
+            				</Setter.Value>
+            			</Setter>
+            		</Style>
+            	</ListView.Resources>
+            	<ListView.ItemContainerStyle>
+            		<StaticResource ResourceKey="ListViewItemStyle1"/>
+            	</ListView.ItemContainerStyle>
+            	
+            </ListView>
             <TextBox Grid.Row="2" Text="{Binding SubReddit, Mode=TwoWay}"/>
         </Grid>
 
@@ -79,7 +97,7 @@
             TabIndex="1"
             Grid.RowSpan="2"
             Padding="116,136,116,46"
-            ItemsSource="{Binding Source={StaticResource itemsViewSource}}"
+            ItemsSource="{Binding Images}"
             SelectionMode="None"
             IsSwipeEnabled="false"
             IsItemClickEnabled="True"
@@ -96,20 +114,20 @@
             </GridView>
 
             <!-- Back button and page title -->
-            <Grid >
+            <Grid>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="50"/>
                     <ColumnDefinition Width="*"/>
                     <ColumnDefinition Width="Auto"/>
                     <ColumnDefinition Width="Auto"/>
                 </Grid.ColumnDefinitions>
-                <Rectangle Fill="DodgerBlue" Grid.ColumnSpan="4" Tapped="Rectangle_Tapped"/>
+                <Rectangle Grid.ColumnSpan="4" Tapped="Rectangle_Tapped" Fill="DodgerBlue"/>
                 <Button x:Name="backButton"
                         Style="{StaticResource NavigationBackButtonNormalStyle}"
                         VerticalAlignment="Center" Click="backButton_Click"/>
                 <TextBlock x:Name="pageTitle" Text="{Binding SubReddit, Mode=TwoWay}" FontSize="32" Grid.Column="1" 
                         TextWrapping="NoWrap" VerticalAlignment="Center" IsHitTestVisible="False"/>
-                <Button Grid.Column="2" Content="Sort" >
+                <Button Grid.Column="2" Content="Sort" FontFamily="Global User Interface" >
                     <Button.Flyout>
                         <MenuFlyout>
                             <MenuFlyoutItem Text="New"/>
