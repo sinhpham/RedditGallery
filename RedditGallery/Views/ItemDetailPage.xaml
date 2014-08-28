@@ -12,10 +12,22 @@
 
     <Page.BottomAppBar>
         <CommandBar>
-            <AppBarButton Label="Copy Link" Icon="Copy" Command="{Binding CopyLinkCmd}"/>
-            <AppBarButton Label="Copy Reddit Link" Icon="Copy" Command="{Binding CopyRedditLinkCmd}"/>
-            <AppBarButton Label="Open Link" Icon="World" Command="{Binding OpenLinkCmd}"/>
-            <AppBarButton Label="Open Reddit Link" Icon="World" Command="{Binding OpenRedditLinkCmd}"/>
+            <AppBarButton Label="Copy" Icon="Copy">
+                <AppBarButton.Flyout>
+                    <MenuFlyout>
+                        <MenuFlyoutItem Text="Link" Command="{Binding CopyLinkCmd}"/>
+                        <MenuFlyoutItem Text="Reddit Link" Command="{Binding CopyRedditLinkCmd}"/>
+                    </MenuFlyout>
+                </AppBarButton.Flyout>
+            </AppBarButton>
+            <AppBarButton Label="Open" Icon="World">
+                <AppBarButton.Flyout>
+                    <MenuFlyout>
+                        <MenuFlyoutItem Text="Link" Command="{Binding OpenLinkCmd}"/>
+                        <MenuFlyoutItem Text="Reddit Link" Command="{Binding OpenRedditLinkCmd}"/>
+                    </MenuFlyout>
+                </AppBarButton.Flyout>
+            </AppBarButton>
         </CommandBar>
     </Page.BottomAppBar>
     <!--
