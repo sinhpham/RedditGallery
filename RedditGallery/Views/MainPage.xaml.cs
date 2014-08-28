@@ -135,5 +135,13 @@ namespace RedditGallery.Views
             }
         }
 
+        private void itemGridView_Tapped(object sender, TappedRoutedEventArgs e)
+        {
+            if (_expanded)
+            {
+                _hideMenu.Begin();
+                _expanded = false;
+            }
+        }
     }
 }

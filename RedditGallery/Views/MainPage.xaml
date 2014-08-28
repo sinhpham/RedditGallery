@@ -61,16 +61,21 @@
             			<Setter Property="Template">
             				<Setter.Value>
             					<ControlTemplate TargetType="ListViewItem">
-            						<ListViewItemPresenter CheckHintBrush="{ThemeResource ListViewItemCheckHintThemeBrush}" CheckBrush="{ThemeResource ListViewItemCheckThemeBrush}" ContentMargin="4" ContentTransitions="{TemplateBinding ContentTransitions}" CheckSelectingBrush="{ThemeResource ListViewItemCheckSelectingThemeBrush}" DragForeground="{ThemeResource ListViewItemDragForegroundThemeBrush}" DragOpacity="{ThemeResource ListViewItemDragThemeOpacity}" DragBackground="{ThemeResource ListViewItemDragBackgroundThemeBrush}" DisabledOpacity="{ThemeResource ListViewItemDisabledThemeOpacity}" FocusBorderBrush="{ThemeResource ListViewItemFocusBorderThemeBrush}" HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}" Padding="{TemplateBinding Padding}" PointerOverBackgroundMargin="1" PlaceholderBackground="{ThemeResource ListViewItemPlaceholderBackgroundThemeBrush}" PointerOverBackground="{ThemeResource ListViewItemPointerOverBackgroundThemeBrush}" ReorderHintOffset="{ThemeResource ListViewItemReorderHintThemeOffset}" SelectedPointerOverBorderBrush="{ThemeResource ListViewItemSelectedPointerOverBorderThemeBrush}" SelectionCheckMarkVisualEnabled="True" SelectedForeground="{ThemeResource ListViewItemSelectedForegroundThemeBrush}" SelectedPointerOverBackground="{ThemeResource ListViewItemSelectedPointerOverBackgroundThemeBrush}" SelectedBorderThickness="{ThemeResource ListViewItemCompactSelectedBorderThemeThickness}" VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"/>
+            						<ListViewItemPresenter CheckHintBrush="{ThemeResource ListViewItemCheckHintThemeBrush}" CheckBrush="{ThemeResource ListViewItemCheckThemeBrush}" ContentMargin="4,4,-18,4" ContentTransitions="{TemplateBinding ContentTransitions}" CheckSelectingBrush="{ThemeResource ListViewItemCheckSelectingThemeBrush}" DragForeground="{ThemeResource ListViewItemDragForegroundThemeBrush}" DragOpacity="{ThemeResource ListViewItemDragThemeOpacity}" DragBackground="{ThemeResource ListViewItemDragBackgroundThemeBrush}" DisabledOpacity="{ThemeResource ListViewItemDisabledThemeOpacity}" FocusBorderBrush="{ThemeResource ListViewItemFocusBorderThemeBrush}" HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}" Padding="{TemplateBinding Padding}" PointerOverBackgroundMargin="1" ReorderHintOffset="{ThemeResource ListViewItemReorderHintThemeOffset}" SelectedPointerOverBorderBrush="{ThemeResource ApplicationPageBackgroundThemeBrush}" SelectedForeground="{ThemeResource ListViewItemSelectedForegroundThemeBrush}" SelectedPointerOverBackground="{ThemeResource ApplicationPageBackgroundThemeBrush}" SelectedBorderThickness="{ThemeResource ListViewItemCompactSelectedBorderThemeThickness}" VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}" SelectedBackground="{ThemeResource ApplicationPageBackgroundThemeBrush}"/>
             					</ControlTemplate>
             				</Setter.Value>
             			</Setter>
             		</Style>
+            		<DataTemplate x:Key="DataTemplate1">
+            			<TextBlock TextWrapping="Wrap" Text="{Binding}" FontSize="24" Margin="22,10,0,10"/>
+            		</DataTemplate>
             	</ListView.Resources>
+            	<ListView.ItemTemplate>
+            		<StaticResource ResourceKey="DataTemplate1"/>
+            	</ListView.ItemTemplate>
             	<ListView.ItemContainerStyle>
             		<StaticResource ResourceKey="ListViewItemStyle1"/>
             	</ListView.ItemContainerStyle>
-            	
             </ListView>
             <TextBox Grid.Row="2" Text="{Binding SubReddit, Mode=TwoWay}"/>
         </Grid>
@@ -101,7 +106,7 @@
             SelectionMode="None"
             IsSwipeEnabled="false"
             IsItemClickEnabled="True"
-            ItemClick="ItemView_ItemClick">
+            ItemClick="ItemView_ItemClick" Margin="0,0,-10,0" Tapped="itemGridView_Tapped">
                 <GridView.ItemTemplate>
                     <DataTemplate>
                         <Grid HorizontalAlignment="Left" Width="240" Height="180">
