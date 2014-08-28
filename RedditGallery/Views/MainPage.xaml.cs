@@ -51,7 +51,14 @@ namespace RedditGallery.Views
             this.navigationHelper.LoadState += navigationHelper_LoadState;
             this.NavigationCacheMode = Windows.UI.Xaml.Navigation.NavigationCacheMode.Enabled;
 
-            
+            VM.PropertyChanged += (s, arg) =>
+            {
+                if (arg.PropertyName == "SubReddit")
+                {
+                    var idx = VM.SubReddits.IndexOf(VM.SubReddit);
+                    _subList.SelectedIndex = idx;
+                }
+            };
         }
 
         /// <summary>
@@ -116,9 +123,12 @@ namespace RedditGallery.Views
 
         private void ListView_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            Debug.WriteLine(e.AddedItems[0].ToString());
-            var newSub = e.AddedItems[0].ToString();
-            VM.SubReddit = newSub;
+            if (e.AddedItems.Count > 0)
+            {
+                Debug.WriteLine(e.AddedItems[0].ToString());
+                var newSub = e.AddedItems[0].ToString();
+                VM.SubReddit = newSub;
+            }
         }
 
         private void Rectangle_Tapped(object sender, TappedRoutedEventArgs e)
