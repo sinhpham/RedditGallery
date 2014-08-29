@@ -8,7 +8,6 @@ using System.Net.Http;
 using System.Runtime.InteropServices.WindowsRuntime;
 using System.Text;
 using System.Threading.Tasks;
-using Windows.Data.Json;
 using Windows.Foundation;
 using Windows.UI.Xaml.Data;
 
@@ -31,36 +30,11 @@ namespace RedditGallery.ViewModels
 
                 var hc = new HttpClient();
                 var jsonText = await hc.GetStringAsync(link);
-                var jsonObject = JsonObject.Parse(jsonText);
-                var jArr = jsonObject["data"].GetObject()["children"].GetArray();
 
-                try
-                {
-                    pc.NextPath = jsonObject["data"].GetObject()["after"].GetString();
-                }
-                catch (InvalidOperationException)
-                {
-                    pc.NextPath = "null";
-                }
-
-
-                foreach (var itemValue in jArr)
-                {
-                    var itemObject = itemValue.GetObject()["data"].GetObject();
-
-                    var url = itemObject["url"].GetString();
-                    var thumbnail = GetThumbnailPathFromUrl(url) ?? itemObject["thumbnail"].GetString();
-                    var permalink = "http://reddit.com" + itemObject["permalink"].GetString();
-
-                    var item = new RedditImg()
-                    {
-                        Title = itemObject["title"].GetString(),
-                        Thumbnail = thumbnail,
-                        ImagePath = url,
-                        Permalink = permalink,
-                    };
-                    retList.Add(item);
-                }
+                string newNextPath;
+                retList = RedditImg.ParseFromJson(jsonText, out newNextPath);
+                pc.NextPath = newNextPath;
+                
                 return retList;
             });
 
@@ -209,23 +183,6 @@ namespace RedditGallery.ViewModels
         public ObservableCollection<string> SubReddits
         {
             get { return _subReddits; }
-        }
-
-        private string GetThumbnailPathFromUrl(string inputUrl)
-        {
-            string ret = null;
-
-            var u = new Uri(inputUrl);
-            if (u.Host == "i.imgur.com")
-            {
-                var strArr = u.AbsolutePath.Split('.');
-                if (strArr.Length == 2)
-                {
-                    ret = "http://" + u.Host + strArr[0] + "m." + strArr[1];
-                }
-            }
-
-            return ret;
         }
     }
 
