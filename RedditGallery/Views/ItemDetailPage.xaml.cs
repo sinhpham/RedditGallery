@@ -100,33 +100,45 @@ namespace RedditGallery.Views
 
         #endregion
 
-        private void _img_ImageOpened(object sender, RoutedEventArgs e)
+        private void _outerSv_Loaded(object sender, RoutedEventArgs e)
         {
-            _imgGrid.Width = _img.ActualWidth;
+            _outerSv.ChangeView(null, 60.0f, null);
+        }
 
-            var sv = (ScrollViewer)((FrameworkElement)_img.Parent).Parent;
-            sv.ChangeView(null, 100, null);
+        bool _isPullRefresh = false;
+        private void _outerSv_ViewChanged(object sender, ScrollViewerViewChangedEventArgs e)
+        {
+            var sv = sender as ScrollViewer;
 
-            EventHandler<ScrollViewerViewChangedEventArgs> ev = null;
-            ev = new EventHandler<ScrollViewerViewChangedEventArgs>((s, arg) =>
+            // text change
+            textBlock2.Opacity = sv.VerticalOffset / 100.0f;
+            if (sv.VerticalOffset == 0.0f)
+                textBlock1.Opacity = 0.7f;
+            else
+                textBlock1.Opacity = 0.3f;
+
+            if (sv.VerticalOffset != 0.0f)
+                _isPullRefresh = true;
+
+            if (!e.IsIntermediate)
             {
-                if (arg.IsIntermediate == true || sv.ZoomFactor < 1)
+                if (sv.VerticalOffset == 0.0f && _isPullRefresh)
                 {
-                    return;
-                }
-                if (sv.VerticalOffset == 0)
-                {
-                    sv.ViewChanged -= ev;
-
                     Windows.UI.Core.CoreWindow.GetForCurrentThread().Dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.Normal, () =>
                     {
                         navigationHelper.GoBackCommand.Execute(null);
                     });
-                    Debug.WriteLine("need go back");
                 }
-            });
+                _isPullRefresh = false;
+                sv.ChangeView(null, 60.0f, null);
+            }
+        }
 
-            sv.ViewChanged += ev;
+        private void _outerSv_SizeChanged(object sender, SizeChangedEventArgs e)
+        {
+            _sv.Width = e.NewSize.Width;
+            _sv.Height = e.NewSize.Height;
+            _outerSv.ChangeView(null, 60.0f, null);
         }
     }
 }

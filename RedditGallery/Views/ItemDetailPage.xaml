@@ -51,14 +51,24 @@
                   to show details for the current item
         -->
         <Grid Grid.RowSpan="2" x:Name="contentRegion">
-            <ScrollViewer Name="_sv" ZoomMode="Enabled" HorizontalScrollBarVisibility="Hidden" VerticalScrollBarVisibility="Hidden" MinZoomFactor="0.75">
-                <Grid Name="_imgGrid" Background="CadetBlue">
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="100"/>
-                        <RowDefinition Height="*"/>
-                    </Grid.RowDefinitions>
-                    <Image Name="_img" Grid.Row="1" Source="{Binding SelectedImg.ImagePath}" ImageOpened="_img_ImageOpened"/>
-                </Grid>
+            <ScrollViewer Name="_outerSv" Loaded="_outerSv_Loaded" ViewChanged="_outerSv_ViewChanged" SizeChanged="_outerSv_SizeChanged" HorizontalScrollBarVisibility="Hidden" VerticalScrollBarVisibility="Hidden">
+                <StackPanel>
+                    <Grid Height="60">
+                        <TextBlock x:Name="textBlock1"
+                               HorizontalAlignment="Center"
+                               VerticalAlignment="Top"
+                               Opacity="0"
+                               Text="close..." />
+                        <TextBlock x:Name="textBlock2"
+                               HorizontalAlignment="Center"
+                               VerticalAlignment="Bottom"
+                               Opacity="0"
+                               Text="pull to..." />
+                    </Grid>
+                    <ScrollViewer Name="_sv" ZoomMode="Enabled" HorizontalScrollBarVisibility="Hidden" VerticalScrollBarVisibility="Hidden" MinZoomFactor="0.75" Width="{Binding ActualWidth, ElementName=_outerSv}" Height="{Binding ActualHeight, ElementName=_outerSv}">
+                        <Image Name="_img" Grid.Row="1" Source="{Binding SelectedImg.ImagePath}"/>
+                    </ScrollViewer>
+                </StackPanel>
             </ScrollViewer>
         </Grid>
 
