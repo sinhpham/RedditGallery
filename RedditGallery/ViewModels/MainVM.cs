@@ -150,6 +150,23 @@ namespace RedditGallery.ViewModels
             }
         }
 
+        RelayCommand _refreshCmd;
+        public RelayCommand RefreshCmd
+        {
+            get
+            {
+                if (_refreshCmd == null)
+                {
+                    _refreshCmd = new RelayCommand(() =>
+                    {
+                        _images.Clear();
+                        Images.NextPath = null;
+                    });
+                }
+                return _refreshCmd;
+            }
+        }
+
         string _subReddit="pics";
         public string SubReddit
         {
