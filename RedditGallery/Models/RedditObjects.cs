@@ -34,7 +34,7 @@ namespace RedditGallery.Models
             {
                 var itemObject = itemValue.GetObject()["data"].GetObject();
 
-                var url = itemObject["url"].GetString();
+                var url = ProcessUrl(itemObject["url"].GetString());
                 var thumbnail = GetThumbnailPathFromUrl(url) ?? itemObject["thumbnail"].GetString();
                 var permalink = "http://reddit.com" + itemObject["permalink"].GetString();
 
@@ -63,6 +63,18 @@ namespace RedditGallery.Models
                 {
                     ret = "http://" + u.Host + strArr[0] + "m." + strArr[1];
                 }
+            }
+
+            return ret;
+        }
+
+        private static string ProcessUrl(string inputUrl)
+        {
+            var ret = inputUrl;
+            var u = new Uri(inputUrl);
+            if (u.Host == "imgur.com")
+            {
+                ret = "http://i.imgur.com" + u.AbsolutePath + ".jpg";
             }
 
             return ret;
