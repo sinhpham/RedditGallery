@@ -11,7 +11,6 @@
     mc:Ignorable="d">
 
     <Page.Resources>
-        <x:String x:Key="AppName">My Application</x:String>
         <Storyboard x:Name="_hideMenu">
             <DoubleAnimation
               Storyboard.TargetName="_content"
@@ -32,8 +31,152 @@
                 </DoubleAnimation.EasingFunction>
             </DoubleAnimation>
         </Storyboard>
+        <Style x:Key="AppBarToggleButtonStyle1" TargetType="AppBarToggleButton">
+        	<Setter Property="Foreground" Value="{ThemeResource AppBarItemForegroundThemeBrush}"/>
+        	<Setter Property="VerticalAlignment" Value="Top"/>
+        	<Setter Property="HorizontalAlignment" Value="Left"/>
+        	<Setter Property="FontFamily" Value="{ThemeResource ContentControlThemeFontFamily}"/>
+        	<Setter Property="FontWeight" Value="Normal"/>
+        	<Setter Property="Template">
+        		<Setter.Value>
+        			<ControlTemplate TargetType="AppBarToggleButton">
+        				<Grid x:Name="RootGrid" Background="Transparent">
+        					<VisualStateManager.VisualStateGroups>
+        						<VisualStateGroup x:Name="ApplicationViewStates">
+        							<VisualState x:Name="FullSize"/>
+        							<VisualState x:Name="Compact">
+        								<Storyboard>
+        									<ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="Visibility" Storyboard.TargetName="TextLabel">
+        										<DiscreteObjectKeyFrame KeyTime="0" Value="Collapsed"/>
+        									</ObjectAnimationUsingKeyFrames>
+        									<ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="Width" Storyboard.TargetName="RootGrid">
+        										<DiscreteObjectKeyFrame KeyTime="0" Value="60"/>
+        									</ObjectAnimationUsingKeyFrames>
+        								</Storyboard>
+        							</VisualState>
+        						</VisualStateGroup>
+        						<VisualStateGroup x:Name="CommonStates">
+        							<VisualState x:Name="Normal"/>
+        							<VisualState x:Name="PointerOver">
+        								<Storyboard>
+        									<ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="Fill" Storyboard.TargetName="BackgroundEllipse">
+        										<DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource AppBarToggleButtonPointerOverBackgroundThemeBrush}"/>
+        									</ObjectAnimationUsingKeyFrames>
+        									<ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="Foreground" Storyboard.TargetName="Content">
+        										<DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource AppBarItemPointerOverForegroundThemeBrush}"/>
+        									</ObjectAnimationUsingKeyFrames>
+        								</Storyboard>
+        							</VisualState>
+        							<VisualState x:Name="Pressed">
+        								<Storyboard>
+        									<ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="Stroke" Storyboard.TargetName="OutlineEllipse">
+        										<DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource AppBarItemForegroundThemeBrush}"/>
+        									</ObjectAnimationUsingKeyFrames>
+        									<ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="Fill" Storyboard.TargetName="BackgroundEllipse">
+        										<DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource AppBarItemForegroundThemeBrush}"/>
+        									</ObjectAnimationUsingKeyFrames>
+        									<ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="Foreground" Storyboard.TargetName="Content">
+        										<DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource AppBarItemPressedForegroundThemeBrush}"/>
+        									</ObjectAnimationUsingKeyFrames>
+        								</Storyboard>
+        							</VisualState>
+        							<VisualState x:Name="Disabled">
+        								<Storyboard>
+        									<ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="Stroke" Storyboard.TargetName="OutlineEllipse">
+        										<DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource AppBarItemDisabledForegroundThemeBrush}"/>
+        									</ObjectAnimationUsingKeyFrames>
+        									<ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="Foreground" Storyboard.TargetName="Content">
+        										<DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource AppBarItemDisabledForegroundThemeBrush}"/>
+        									</ObjectAnimationUsingKeyFrames>
+        									<ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="Foreground" Storyboard.TargetName="TextLabel">
+        										<DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource AppBarItemDisabledForegroundThemeBrush}"/>
+        									</ObjectAnimationUsingKeyFrames>
+        								</Storyboard>
+        							</VisualState>
+        							<VisualState x:Name="Checked">
+        								<Storyboard>
+        									<ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="Stroke" Storyboard.TargetName="OutlineEllipse">
+        										<DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource AppBarToggleButtonCheckedBorderThemeBrush}"/>
+        									</ObjectAnimationUsingKeyFrames>
+        									<ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="Fill" Storyboard.TargetName="BackgroundEllipse">
+        										<DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource AppBarToggleButtonCheckedBackgroundThemeBrush}"/>
+        									</ObjectAnimationUsingKeyFrames>
+        									<ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="Foreground" Storyboard.TargetName="Content">
+        										<DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource AppBarToggleButtonCheckedForegroundThemeBrush}"/>
+        									</ObjectAnimationUsingKeyFrames>
+        								</Storyboard>
+        							</VisualState>
+        							<VisualState x:Name="CheckedPointerOver">
+        								<Storyboard>
+        									<ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="Stroke" Storyboard.TargetName="OutlineEllipse">
+        										<DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource AppBarToggleButtonCheckedPointerOverBorderThemeBrush}"/>
+        									</ObjectAnimationUsingKeyFrames>
+        									<ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="Fill" Storyboard.TargetName="BackgroundEllipse">
+        										<DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource AppBarToggleButtonCheckedPointerOverBackgroundThemeBrush}"/>
+        									</ObjectAnimationUsingKeyFrames>
+        									<ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="Foreground" Storyboard.TargetName="Content">
+        										<DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource AppBarToggleButtonCheckedForegroundThemeBrush}"/>
+        									</ObjectAnimationUsingKeyFrames>
+        								</Storyboard>
+        							</VisualState>
+        							<VisualState x:Name="CheckedPressed">
+        								<Storyboard>
+        									<ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="Stroke" Storyboard.TargetName="OutlineEllipse">
+        										<DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource AppBarToggleButtonCheckedPressedBorderThemeBrush}"/>
+        									</ObjectAnimationUsingKeyFrames>
+        									<ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="Fill" Storyboard.TargetName="BackgroundEllipse">
+        										<DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource AppBarToggleButtonCheckedPressedBackgroundThemeBrush}"/>
+        									</ObjectAnimationUsingKeyFrames>
+        									<ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="Foreground" Storyboard.TargetName="Content">
+        										<DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource AppBarToggleButtonCheckedPressedForegroundThemeBrush}"/>
+        									</ObjectAnimationUsingKeyFrames>
+        								</Storyboard>
+        							</VisualState>
+        							<VisualState x:Name="CheckedDisabled">
+        								<Storyboard>
+        									<ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="Stroke" Storyboard.TargetName="OutlineEllipse">
+        										<DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource AppBarToggleButtonCheckedDisabledBorderThemeBrush}"/>
+        									</ObjectAnimationUsingKeyFrames>
+        									<ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="Fill" Storyboard.TargetName="BackgroundEllipse">
+        										<DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource AppBarToggleButtonCheckedDisabledBackgroundThemeBrush}"/>
+        									</ObjectAnimationUsingKeyFrames>
+        									<ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="Foreground" Storyboard.TargetName="Content">
+        										<DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource AppBarToggleButtonCheckedDisabledForegroundThemeBrush}"/>
+        									</ObjectAnimationUsingKeyFrames>
+        									<ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="Foreground" Storyboard.TargetName="TextLabel">
+        										<DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource AppBarItemDisabledForegroundThemeBrush}"/>
+        									</ObjectAnimationUsingKeyFrames>
+        								</Storyboard>
+        							</VisualState>
+        						</VisualStateGroup>
+        						<VisualStateGroup x:Name="FocusStates">
+        							<VisualState x:Name="Focused">
+        								<Storyboard>
+        									<DoubleAnimation Duration="0" To="1" Storyboard.TargetProperty="Opacity" Storyboard.TargetName="FocusVisualWhite"/>
+        									<DoubleAnimation Duration="0" To="1" Storyboard.TargetProperty="Opacity" Storyboard.TargetName="FocusVisualBlack"/>
+        								</Storyboard>
+        							</VisualState>
+        							<VisualState x:Name="Unfocused"/>
+        							<VisualState x:Name="PointerFocused"/>
+        						</VisualStateGroup>
+        					</VisualStateManager.VisualStateGroups>
+        					<StackPanel>
+        						<Grid HorizontalAlignment="Center">
+        							<Ellipse x:Name="BackgroundEllipse" Fill="{ThemeResource AppBarItemBackgroundThemeBrush}" Height="40" UseLayoutRounding="False" Width="40"/>
+        							<Ellipse x:Name="OutlineEllipse" Height="40" Stroke="{ThemeResource AppBarItemForegroundThemeBrush}" StrokeThickness="2" UseLayoutRounding="False" Width="40"/>
+        							<ContentPresenter x:Name="Content" AutomationProperties.AccessibilityView="Raw" Content="{TemplateBinding Icon}" Foreground="{TemplateBinding Foreground}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
+        						</Grid>
+        						<TextBlock x:Name="TextLabel" Foreground="{ThemeResource AppBarItemForegroundThemeBrush}" FontSize="12" FontFamily="{TemplateBinding FontFamily}" TextAlignment="Center" TextWrapping="Wrap" Text="{TemplateBinding Label}" Height="0"/>
+        					</StackPanel>
+        					<Rectangle x:Name="FocusVisualWhite" IsHitTestVisible="False" Opacity="0" StrokeDashOffset="1.5" StrokeEndLineCap="Square" Stroke="{ThemeResource FocusVisualWhiteStrokeThemeBrush}" StrokeDashArray="1,1"/>
+        					<Rectangle x:Name="FocusVisualBlack" IsHitTestVisible="False" Opacity="0" StrokeDashOffset="0.5" StrokeEndLineCap="Square" Stroke="{ThemeResource FocusVisualBlackStrokeThemeBrush}" StrokeDashArray="1,1"/>
+        				</Grid>
+        			</ControlTemplate>
+        		</Setter.Value>
+        	</Setter>
+        </Style>
     </Page.Resources>
-    
+
     <Page.BottomAppBar>
         <CommandBar>
             <AppBarButton Label="Refresh" Icon="Refresh" Command="{Binding RefreshCmd}"/>
@@ -47,10 +190,10 @@
     -->
     <Grid>
         <Grid Name="_menu" Width="250" HorizontalAlignment="Left" >
-        	<Grid.ColumnDefinitions>
-        		<ColumnDefinition Width="Auto"/>
-        		<ColumnDefinition Width="*"/>
-        	</Grid.ColumnDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="*"/>
@@ -58,188 +201,38 @@
             </Grid.RowDefinitions>
             <TextBlock Text="Reddit Gallery" FontSize="32" Margin="26,20,25,0" HorizontalAlignment="Center" Grid.ColumnSpan="2"/>
             <ListView Name="_subList" Grid.Row="1" ItemsSource="{Binding SubReddits}" SelectionChanged="ListView_SelectionChanged" Grid.ColumnSpan="2">
-            	<ListView.Resources>
-            		<Style x:Key="ListViewItemStyle1" TargetType="ListViewItem">
-            			<Setter Property="FontFamily" Value="{ThemeResource ContentControlThemeFontFamily}"/>
-            			<Setter Property="FontSize" Value="{ThemeResource ControlContentThemeFontSize}"/>
-            			<Setter Property="Background" Value="Transparent"/>
-            			<Setter Property="TabNavigation" Value="Local"/>
-            			<Setter Property="IsHoldingEnabled" Value="True"/>
-            			<Setter Property="Margin" Value="0,0,18,2"/>
-            			<Setter Property="HorizontalContentAlignment" Value="Left"/>
-            			<Setter Property="VerticalContentAlignment" Value="Top"/>
-            			<Setter Property="Template">
-            				<Setter.Value>
-            					<ControlTemplate TargetType="ListViewItem">
-            						<ListViewItemPresenter CheckHintBrush="{ThemeResource ListViewItemCheckHintThemeBrush}" CheckBrush="{ThemeResource ListViewItemCheckThemeBrush}" ContentMargin="4,4,-18,4" ContentTransitions="{TemplateBinding ContentTransitions}" CheckSelectingBrush="{ThemeResource ListViewItemCheckSelectingThemeBrush}" DragForeground="{ThemeResource ListViewItemDragForegroundThemeBrush}" DragOpacity="{ThemeResource ListViewItemDragThemeOpacity}" DragBackground="{ThemeResource ListViewItemDragBackgroundThemeBrush}" DisabledOpacity="{ThemeResource ListViewItemDisabledThemeOpacity}" FocusBorderBrush="{ThemeResource ListViewItemFocusBorderThemeBrush}" HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}" Padding="{TemplateBinding Padding}" PointerOverBackgroundMargin="1" ReorderHintOffset="{ThemeResource ListViewItemReorderHintThemeOffset}" SelectedPointerOverBorderBrush="{ThemeResource ApplicationPageBackgroundThemeBrush}" SelectedForeground="{ThemeResource ListViewItemSelectedForegroundThemeBrush}" SelectedPointerOverBackground="{ThemeResource ApplicationPageBackgroundThemeBrush}" SelectedBorderThickness="{ThemeResource ListViewItemCompactSelectedBorderThemeThickness}" VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}" SelectedBackground="{ThemeResource ApplicationPageBackgroundThemeBrush}"/>
-            					</ControlTemplate>
-            				</Setter.Value>
-            			</Setter>
-            		</Style>
-            		<DataTemplate x:Key="DataTemplate1">
-            			<TextBlock TextWrapping="Wrap" Text="{Binding}" FontSize="24" Margin="22,10,0,10"/>
-            		</DataTemplate>
-            	</ListView.Resources>
-            	<ListView.ItemTemplate>
-            		<StaticResource ResourceKey="DataTemplate1"/>
-            	</ListView.ItemTemplate>
-            	<ListView.ItemContainerStyle>
-            		<StaticResource ResourceKey="ListViewItemStyle1"/>
-            	</ListView.ItemContainerStyle>
+                <ListView.Resources>
+                    <Style x:Key="ListViewItemStyle1" TargetType="ListViewItem">
+                        <Setter Property="FontFamily" Value="{ThemeResource ContentControlThemeFontFamily}"/>
+                        <Setter Property="FontSize" Value="{ThemeResource ControlContentThemeFontSize}"/>
+                        <Setter Property="Background" Value="Transparent"/>
+                        <Setter Property="TabNavigation" Value="Local"/>
+                        <Setter Property="IsHoldingEnabled" Value="True"/>
+                        <Setter Property="Margin" Value="0,0,18,2"/>
+                        <Setter Property="HorizontalContentAlignment" Value="Left"/>
+                        <Setter Property="VerticalContentAlignment" Value="Top"/>
+                        <Setter Property="Template">
+                            <Setter.Value>
+                                <ControlTemplate TargetType="ListViewItem">
+                                    <ListViewItemPresenter CheckHintBrush="{ThemeResource ListViewItemCheckHintThemeBrush}" CheckBrush="{ThemeResource ListViewItemCheckThemeBrush}" ContentMargin="4,4,-18,4" ContentTransitions="{TemplateBinding ContentTransitions}" CheckSelectingBrush="{ThemeResource ListViewItemCheckSelectingThemeBrush}" DragForeground="{ThemeResource ListViewItemDragForegroundThemeBrush}" DragOpacity="{ThemeResource ListViewItemDragThemeOpacity}" DragBackground="{ThemeResource ListViewItemDragBackgroundThemeBrush}" DisabledOpacity="{ThemeResource ListViewItemDisabledThemeOpacity}" FocusBorderBrush="{ThemeResource ListViewItemFocusBorderThemeBrush}" HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}" Padding="{TemplateBinding Padding}" PointerOverBackgroundMargin="1" ReorderHintOffset="{ThemeResource ListViewItemReorderHintThemeOffset}" SelectedPointerOverBorderBrush="{ThemeResource ApplicationPageBackgroundThemeBrush}" SelectedForeground="{ThemeResource ListViewItemSelectedForegroundThemeBrush}" SelectedPointerOverBackground="{ThemeResource ApplicationPageBackgroundThemeBrush}" SelectedBorderThickness="{ThemeResource ListViewItemCompactSelectedBorderThemeThickness}" VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}" SelectedBackground="{ThemeResource ApplicationPageBackgroundThemeBrush}"/>
+                                </ControlTemplate>
+                            </Setter.Value>
+                        </Setter>
+                    </Style>
+                    <DataTemplate x:Key="DataTemplate1">
+                        <TextBlock TextWrapping="Wrap" Text="{Binding}" FontSize="24" Margin="22,10,0,10"/>
+                    </DataTemplate>
+                </ListView.Resources>
+                <ListView.ItemTemplate>
+                    <StaticResource ResourceKey="DataTemplate1"/>
+                </ListView.ItemTemplate>
+                <ListView.ItemContainerStyle>
+                    <StaticResource ResourceKey="ListViewItemStyle1"/>
+                </ListView.ItemContainerStyle>
             </ListView>
-            <AppBarToggleButton Grid.Row="2" Icon="Favorite" IsChecked="{Binding IsInFav, Mode=TwoWay}" >
-            	<AppBarToggleButton.Resources>
-            		<Style x:Key="AppBarToggleButtonStyle1" TargetType="AppBarToggleButton">
-            			<Setter Property="Foreground" Value="{ThemeResource AppBarItemForegroundThemeBrush}"/>
-            			<Setter Property="VerticalAlignment" Value="Top"/>
-            			<Setter Property="HorizontalAlignment" Value="Left"/>
-            			<Setter Property="FontFamily" Value="{ThemeResource ContentControlThemeFontFamily}"/>
-            			<Setter Property="FontWeight" Value="Normal"/>
-            			<Setter Property="Template">
-            				<Setter.Value>
-            					<ControlTemplate TargetType="AppBarToggleButton">
-            						<Grid x:Name="RootGrid" Background="Transparent">
-            							<VisualStateManager.VisualStateGroups>
-            								<VisualStateGroup x:Name="ApplicationViewStates">
-            									<VisualState x:Name="FullSize"/>
-            									<VisualState x:Name="Compact">
-            										<Storyboard>
-            											<ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="Visibility" Storyboard.TargetName="TextLabel">
-            												<DiscreteObjectKeyFrame KeyTime="0" Value="Collapsed"/>
-            											</ObjectAnimationUsingKeyFrames>
-            											<ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="Width" Storyboard.TargetName="RootGrid">
-            												<DiscreteObjectKeyFrame KeyTime="0" Value="60"/>
-            											</ObjectAnimationUsingKeyFrames>
-            										</Storyboard>
-            									</VisualState>
-            								</VisualStateGroup>
-            								<VisualStateGroup x:Name="CommonStates">
-            									<VisualState x:Name="Normal"/>
-            									<VisualState x:Name="PointerOver">
-            										<Storyboard>
-            											<ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="Fill" Storyboard.TargetName="BackgroundEllipse">
-            												<DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource AppBarToggleButtonPointerOverBackgroundThemeBrush}"/>
-            											</ObjectAnimationUsingKeyFrames>
-            											<ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="Foreground" Storyboard.TargetName="Content">
-            												<DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource AppBarItemPointerOverForegroundThemeBrush}"/>
-            											</ObjectAnimationUsingKeyFrames>
-            										</Storyboard>
-            									</VisualState>
-            									<VisualState x:Name="Pressed">
-            										<Storyboard>
-            											<ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="Stroke" Storyboard.TargetName="OutlineEllipse">
-            												<DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource AppBarItemForegroundThemeBrush}"/>
-            											</ObjectAnimationUsingKeyFrames>
-            											<ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="Fill" Storyboard.TargetName="BackgroundEllipse">
-            												<DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource AppBarItemForegroundThemeBrush}"/>
-            											</ObjectAnimationUsingKeyFrames>
-            											<ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="Foreground" Storyboard.TargetName="Content">
-            												<DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource AppBarItemPressedForegroundThemeBrush}"/>
-            											</ObjectAnimationUsingKeyFrames>
-            										</Storyboard>
-            									</VisualState>
-            									<VisualState x:Name="Disabled">
-            										<Storyboard>
-            											<ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="Stroke" Storyboard.TargetName="OutlineEllipse">
-            												<DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource AppBarItemDisabledForegroundThemeBrush}"/>
-            											</ObjectAnimationUsingKeyFrames>
-            											<ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="Foreground" Storyboard.TargetName="Content">
-            												<DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource AppBarItemDisabledForegroundThemeBrush}"/>
-            											</ObjectAnimationUsingKeyFrames>
-            											<ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="Foreground" Storyboard.TargetName="TextLabel">
-            												<DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource AppBarItemDisabledForegroundThemeBrush}"/>
-            											</ObjectAnimationUsingKeyFrames>
-            										</Storyboard>
-            									</VisualState>
-            									<VisualState x:Name="Checked">
-            										<Storyboard>
-            											<ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="Stroke" Storyboard.TargetName="OutlineEllipse">
-            												<DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource AppBarToggleButtonCheckedBorderThemeBrush}"/>
-            											</ObjectAnimationUsingKeyFrames>
-            											<ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="Fill" Storyboard.TargetName="BackgroundEllipse">
-            												<DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource AppBarToggleButtonCheckedBackgroundThemeBrush}"/>
-            											</ObjectAnimationUsingKeyFrames>
-            											<ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="Foreground" Storyboard.TargetName="Content">
-            												<DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource AppBarToggleButtonCheckedForegroundThemeBrush}"/>
-            											</ObjectAnimationUsingKeyFrames>
-            										</Storyboard>
-            									</VisualState>
-            									<VisualState x:Name="CheckedPointerOver">
-            										<Storyboard>
-            											<ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="Stroke" Storyboard.TargetName="OutlineEllipse">
-            												<DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource AppBarToggleButtonCheckedPointerOverBorderThemeBrush}"/>
-            											</ObjectAnimationUsingKeyFrames>
-            											<ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="Fill" Storyboard.TargetName="BackgroundEllipse">
-            												<DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource AppBarToggleButtonCheckedPointerOverBackgroundThemeBrush}"/>
-            											</ObjectAnimationUsingKeyFrames>
-            											<ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="Foreground" Storyboard.TargetName="Content">
-            												<DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource AppBarToggleButtonCheckedForegroundThemeBrush}"/>
-            											</ObjectAnimationUsingKeyFrames>
-            										</Storyboard>
-            									</VisualState>
-            									<VisualState x:Name="CheckedPressed">
-            										<Storyboard>
-            											<ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="Stroke" Storyboard.TargetName="OutlineEllipse">
-            												<DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource AppBarToggleButtonCheckedPressedBorderThemeBrush}"/>
-            											</ObjectAnimationUsingKeyFrames>
-            											<ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="Fill" Storyboard.TargetName="BackgroundEllipse">
-            												<DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource AppBarToggleButtonCheckedPressedBackgroundThemeBrush}"/>
-            											</ObjectAnimationUsingKeyFrames>
-            											<ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="Foreground" Storyboard.TargetName="Content">
-            												<DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource AppBarToggleButtonCheckedPressedForegroundThemeBrush}"/>
-            											</ObjectAnimationUsingKeyFrames>
-            										</Storyboard>
-            									</VisualState>
-            									<VisualState x:Name="CheckedDisabled">
-            										<Storyboard>
-            											<ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="Stroke" Storyboard.TargetName="OutlineEllipse">
-            												<DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource AppBarToggleButtonCheckedDisabledBorderThemeBrush}"/>
-            											</ObjectAnimationUsingKeyFrames>
-            											<ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="Fill" Storyboard.TargetName="BackgroundEllipse">
-            												<DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource AppBarToggleButtonCheckedDisabledBackgroundThemeBrush}"/>
-            											</ObjectAnimationUsingKeyFrames>
-            											<ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="Foreground" Storyboard.TargetName="Content">
-            												<DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource AppBarToggleButtonCheckedDisabledForegroundThemeBrush}"/>
-            											</ObjectAnimationUsingKeyFrames>
-            											<ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="Foreground" Storyboard.TargetName="TextLabel">
-            												<DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource AppBarItemDisabledForegroundThemeBrush}"/>
-            											</ObjectAnimationUsingKeyFrames>
-            										</Storyboard>
-            									</VisualState>
-            								</VisualStateGroup>
-            								<VisualStateGroup x:Name="FocusStates">
-            									<VisualState x:Name="Focused">
-            										<Storyboard>
-            											<DoubleAnimation Duration="0" To="1" Storyboard.TargetProperty="Opacity" Storyboard.TargetName="FocusVisualWhite"/>
-            											<DoubleAnimation Duration="0" To="1" Storyboard.TargetProperty="Opacity" Storyboard.TargetName="FocusVisualBlack"/>
-            										</Storyboard>
-            									</VisualState>
-            									<VisualState x:Name="Unfocused"/>
-            									<VisualState x:Name="PointerFocused"/>
-            								</VisualStateGroup>
-            							</VisualStateManager.VisualStateGroups>
-            							<StackPanel VerticalAlignment="Top">
-            								<Grid HorizontalAlignment="Center">
-            									<Ellipse x:Name="BackgroundEllipse" Fill="{ThemeResource AppBarItemBackgroundThemeBrush}" Height="40" UseLayoutRounding="False" Width="40"/>
-            									<Ellipse x:Name="OutlineEllipse" Height="40" Stroke="{ThemeResource AppBarItemForegroundThemeBrush}" StrokeThickness="2" UseLayoutRounding="False" Width="40"/>
-            									<ContentPresenter x:Name="Content" AutomationProperties.AccessibilityView="Raw" Content="{TemplateBinding Icon}" Foreground="{TemplateBinding Foreground}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
-            								</Grid>
-            								<TextBlock x:Name="TextLabel" Foreground="{ThemeResource AppBarItemForegroundThemeBrush}" FontSize="12" FontFamily="{TemplateBinding FontFamily}" TextAlignment="Center" TextWrapping="Wrap" Text="{TemplateBinding Label}" Height="0"/>
-            							</StackPanel>
-            							<Rectangle x:Name="FocusVisualWhite" IsHitTestVisible="False" Opacity="0" StrokeDashOffset="1.5" StrokeEndLineCap="Square" Stroke="{ThemeResource FocusVisualWhiteStrokeThemeBrush}" StrokeDashArray="1,1"/>
-            							<Rectangle x:Name="FocusVisualBlack" IsHitTestVisible="False" Opacity="0" StrokeDashOffset="0.5" StrokeEndLineCap="Square" Stroke="{ThemeResource FocusVisualBlackStrokeThemeBrush}" StrokeDashArray="1,1"/>
-            						</Grid>
-            					</ControlTemplate>
-            				</Setter.Value>
-            			</Setter>
-            		</Style>
-            	</AppBarToggleButton.Resources>
-            	<AppBarToggleButton.Style>
-            		<StaticResource ResourceKey="AppBarToggleButtonStyle1"/>
-            	</AppBarToggleButton.Style>
-            </AppBarToggleButton>
+            <AppBarToggleButton Grid.Row="2" Icon="Favorite" IsChecked="{Binding IsInFav, Mode=TwoWay}" Style="{StaticResource AppBarToggleButtonStyle1}" Margin="0,0,5,0"/>
             <TextBox Grid.Row="2" Text="{Binding SubReddit, Mode=TwoWay}" FontSize="24" Grid.Column="1"/>
-            
+
         </Grid>
 
         <Grid Name="_content" Background="{ThemeResource ApplicationPageBackgroundThemeBrush}" RenderTransformOrigin="0.5,0.5">
@@ -283,15 +276,13 @@
             <!-- Back button and page title -->
             <Grid>
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="50"/>
+                    <ColumnDefinition Width="Auto"/>
                     <ColumnDefinition Width="*"/>
                     <ColumnDefinition Width="Auto"/>
                     <ColumnDefinition Width="Auto"/>
                 </Grid.ColumnDefinitions>
                 <Rectangle Grid.ColumnSpan="4" Tapped="Rectangle_Tapped" Fill="DodgerBlue"/>
-                <Button x:Name="backButton"
-                        Style="{StaticResource NavigationBackButtonNormalStyle}"
-                        VerticalAlignment="Center" Click="backButton_Click"/>
+                <AppBarToggleButton Icon="List" Click="backButton_Click" Style="{StaticResource AppBarToggleButtonStyle1}" VerticalAlignment="Center" IsChecked="True" Margin="20,0"/>
                 <TextBlock x:Name="pageTitle" Text="{Binding SubReddit, Mode=TwoWay}" FontSize="32" Grid.Column="1" 
                         TextWrapping="NoWrap" VerticalAlignment="Center" IsHitTestVisible="False"/>
                 <Button Grid.Column="2" Content="Sort" FontFamily="Global User Interface" >
