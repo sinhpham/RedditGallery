@@ -43,7 +43,7 @@ namespace RedditGallery.ViewModels
                     pc.NextPath = "null";
                 }
 
-                
+
                 foreach (var itemValue in jArr)
                 {
                     var itemObject = itemValue.GetObject()["data"].GetObject();
@@ -167,7 +167,30 @@ namespace RedditGallery.ViewModels
             }
         }
 
-        string _subReddit="pics";
+
+        public bool IsInFav
+        {
+            get { return SubReddits.Contains(SubReddit); }
+            set
+            {
+                if (value)
+                {
+                    // Add to fav.
+                    if (!SubReddits.Contains(SubReddit))
+                    {
+                        SubReddits.Add(SubReddit);
+                    }
+                }
+                else
+                {
+                    // Remove from fav.
+                    SubReddits.Remove(SubReddit);
+                }
+                OnPropertyChanged(() => IsInFav);
+            }
+        }
+
+        string _subReddit = "pics";
         public string SubReddit
         {
             get { return _subReddit; }
@@ -177,6 +200,7 @@ namespace RedditGallery.ViewModels
                 {
                     _images.Clear();
                     Images.NextPath = null;
+                    OnPropertyChanged(() => IsInFav);
                 }
             }
         }
