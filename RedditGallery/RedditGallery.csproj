@@ -103,6 +103,10 @@
   </PropertyGroup>
   <ItemGroup>
     <!-- A reference to the entire .Net Framework and Windows SDK are automatically included -->
+    <Page Include="Views\AppSettingsFlyout.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\ItemDetailPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -124,6 +128,9 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ViewModels\BindableBase.cs" />
     <Compile Include="ViewModels\MainVM.cs" />
+    <Compile Include="Views\AppSettingsFlyout.xaml.cs">
+      <DependentUpon>AppSettingsFlyout.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\ItemDetailPage.xaml.cs">
       <DependentUpon>ItemDetailPage.xaml</DependentUpon>
     </Compile>

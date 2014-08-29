@@ -9,6 +9,7 @@ using Windows.ApplicationModel;
 using Windows.ApplicationModel.Activation;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
+using Windows.UI.ApplicationSettings;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Controls.Primitives;
@@ -47,6 +48,23 @@ namespace RedditGallery
                 }
                 return _mainVM;
             }
+        }
+
+        protected override void OnWindowCreated(WindowCreatedEventArgs args)
+        {
+            SettingsPane.GetForCurrentView().CommandsRequested += (s, e) =>
+            {
+                var defaultsCommand = new SettingsCommand("general", "General",
+                    (handler) =>
+                    {
+                        var sf = new AppSettingsFlyout();
+                        sf.Show();
+                    });
+                e.Request.ApplicationCommands.Add(defaultsCommand);
+            };
+
+
+            base.OnWindowCreated(args);
         }
 
         /// <summary>
