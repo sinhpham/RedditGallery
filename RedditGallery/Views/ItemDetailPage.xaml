@@ -66,8 +66,28 @@
                                Text="pull to..." />
                     </Grid>
                     <ScrollViewer Name="_sv" ZoomMode="Enabled" HorizontalScrollBarVisibility="Hidden" VerticalScrollBarVisibility="Hidden" MinZoomFactor="0.75" Width="{Binding ActualWidth, ElementName=_outerSv}" Height="{Binding ActualHeight, ElementName=_outerSv}">
-                        <Image Name="_img" Grid.Row="1" Source="{Binding SelectedImg.ImagePath}"/>
+                        <Image Name="_img" Grid.Row="1" Source="{Binding SelectedItem.DisplayingImage.ImageLink}"/>
                     </ScrollViewer>
+                    <ListView Height="180" ItemsSource="{Binding SelectedItem.GalleryImages}" SelectionMode="Single" IsSwipeEnabled="False" Background="#FF630B0B" SelectedItem="{Binding SelectedItem.DisplayingImage, Mode=TwoWay}">
+                        <ListView.Resources>
+                            <ItemsPanelTemplate x:Key="ItemsPanelTemplate1">
+                                <ItemsStackPanel Orientation="Horizontal" />
+                            </ItemsPanelTemplate>
+                            <DataTemplate x:Key="DataTemplate1">
+                                <Grid HorizontalAlignment="Left" Width="240" Height="180">
+                                    <Border Background="{ThemeResource ListViewItemPlaceholderBackgroundThemeBrush}">
+                                        <Image Source="{Binding ThumbnailLink}" Stretch="Uniform"/>
+                                    </Border>
+                                </Grid>
+                            </DataTemplate>
+                        </ListView.Resources>
+                        <ListView.ItemTemplate>
+                            <StaticResource ResourceKey="DataTemplate1"/>
+                        </ListView.ItemTemplate>
+                        <ListView.ItemsPanel>
+                            <StaticResource ResourceKey="ItemsPanelTemplate1"/>
+                        </ListView.ItemsPanel>
+                    </ListView>
                 </StackPanel>
             </ScrollViewer>
         </Grid>

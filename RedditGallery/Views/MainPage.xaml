@@ -266,7 +266,7 @@
                     <DataTemplate>
                         <Grid HorizontalAlignment="Left" Width="240" Height="180">
                             <Border Background="{ThemeResource ListViewItemPlaceholderBackgroundThemeBrush}">
-                                <Image Source="{Binding Thumbnail}" Stretch="Uniform" AutomationProperties.Name="{Binding Title}"/>
+                                <Image Source="{Binding DisplayingImage.ThumbnailLink}" Stretch="Uniform"/>
                             </Border>
                         </Grid>
                     </DataTemplate>

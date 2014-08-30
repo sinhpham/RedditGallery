@@ -110,7 +110,7 @@ namespace RedditGallery.Views
 
         private void ItemView_ItemClick(object sender, ItemClickEventArgs e)
         {
-            VM.SelectedImg = (RedditImg)e.ClickedItem;
+            VM.SelectedItem = (RedditImage)e.ClickedItem;
             this.Frame.Navigate(typeof(ItemDetailPage));
         }
 

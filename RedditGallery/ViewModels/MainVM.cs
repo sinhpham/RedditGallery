@@ -17,9 +17,9 @@ namespace RedditGallery.ViewModels
     {
         public MainVM()
         {
-            _images = new PaginatedCollection<RedditImg>(async (pc, count) =>
+            _images = new PaginatedCollection<RedditImage>(async (pc, count) =>
             {
-                var retList = new List<RedditImg>();
+                var retList = new List<RedditImage>();
                 if (string.Equals("null", pc.NextPath, StringComparison.Ordinal))
                 {
                     return retList;
@@ -32,7 +32,7 @@ namespace RedditGallery.ViewModels
                 var jsonText = await hc.GetStringAsync(link);
 
                 string newNextPath;
-                retList = RedditImg.ParseFromJson(jsonText, out newNextPath);
+                retList = RedditImageParser.ParseFromJson(jsonText, out newNextPath);
                 pc.NextPath = newNextPath;
                 
                 return retList;
@@ -43,14 +43,14 @@ namespace RedditGallery.ViewModels
             SubReddits.Add("spaceporn");
         }
 
-        private PaginatedCollection<RedditImg> _images;
-        public PaginatedCollection<RedditImg> Images
+        private PaginatedCollection<RedditImage> _images;
+        public PaginatedCollection<RedditImage> Images
         {
             get { return this._images; }
         }
 
-        RedditImg _selectedImg;
-        public RedditImg SelectedImg
+        RedditImage _selectedImg;
+        public RedditImage SelectedItem
         {
             get { return _selectedImg; }
             set { SetProperty(ref _selectedImg, value); }
@@ -66,7 +66,7 @@ namespace RedditGallery.ViewModels
                     _copyLinkCmd = new RelayCommand(() =>
                     {
                         var dp = new Windows.ApplicationModel.DataTransfer.DataPackage();
-                        dp.SetText(SelectedImg.OriginalUrl);
+                        dp.SetText(SelectedItem.OriginalUrl);
                         Windows.ApplicationModel.DataTransfer.Clipboard.SetContent(dp);
                     });
                 }
@@ -84,7 +84,7 @@ namespace RedditGallery.ViewModels
                     _copyRedditLinkCmd = new RelayCommand(() =>
                     {
                         var dp = new Windows.ApplicationModel.DataTransfer.DataPackage();
-                        dp.SetText(SelectedImg.Permalink);
+                        dp.SetText(SelectedItem.Permalink);
                         Windows.ApplicationModel.DataTransfer.Clipboard.SetContent(dp);
                     });
                 }
@@ -101,7 +101,7 @@ namespace RedditGallery.ViewModels
                 {
                     _openLinkCmd = new RelayCommand(() =>
                     {
-                        Windows.System.Launcher.LaunchUriAsync(new Uri(SelectedImg.OriginalUrl));
+                        Windows.System.Launcher.LaunchUriAsync(new Uri(SelectedItem.OriginalUrl));
                     });
                 }
                 return _openLinkCmd;
@@ -117,7 +117,7 @@ namespace RedditGallery.ViewModels
                 {
                     _openRedditLinkCmd = new RelayCommand(() =>
                     {
-                        Windows.System.Launcher.LaunchUriAsync(new Uri(SelectedImg.Permalink));
+                        Windows.System.Launcher.LaunchUriAsync(new Uri(SelectedItem.Permalink));
                     });
                 }
                 return _openRedditLinkCmd;

@@ -130,7 +130,7 @@ namespace RedditGallery.Views
                     });
                 }
                 _isPullRefresh = false;
-                sv.ChangeView(null, 60.0f, null);
+                //sv.ChangeView(null, 60.0f, null);
             }
         }
 
