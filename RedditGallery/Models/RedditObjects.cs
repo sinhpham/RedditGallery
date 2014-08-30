@@ -13,6 +13,7 @@ namespace RedditGallery.Models
         public string Thumbnail { get; set; }
         public string ImagePath { get; set; }
         public string Permalink { get; set; }
+        public bool NSFW { get; set; }
 
         public static List<RedditImg> ParseFromJson(string jsonText, out string nextPath)
         {
@@ -44,6 +45,7 @@ namespace RedditGallery.Models
                     Thumbnail = thumbnail,
                     ImagePath = url,
                     Permalink = permalink,
+                    NSFW = itemObject["over_18"].GetBoolean()
                 };
                 ret.Add(item);
             }

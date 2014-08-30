@@ -50,17 +50,30 @@ namespace RedditGallery
             }
         }
 
+        static SettingsVM _settingsVM;
+        public static SettingsVM SettingVM
+        {
+            get
+            {
+                if (_settingsVM == null)
+                {
+                    _settingsVM = new SettingsVM();
+                }
+                return _settingsVM;
+            }
+        }
+
         protected override void OnWindowCreated(WindowCreatedEventArgs args)
         {
             SettingsPane.GetForCurrentView().CommandsRequested += (s, e) =>
             {
-                var defaultsCommand = new SettingsCommand("general", "General",
+                var generalSettingCmd = new SettingsCommand("general", "General",
                     (handler) =>
                     {
                         var sf = new AppSettingsFlyout();
                         sf.Show();
                     });
-                e.Request.ApplicationCommands.Add(defaultsCommand);
+                e.Request.ApplicationCommands.Add(generalSettingCmd);
             };
 
 
