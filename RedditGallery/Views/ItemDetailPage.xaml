@@ -68,7 +68,7 @@
                     <ScrollViewer Name="_sv" ZoomMode="Enabled" HorizontalScrollBarVisibility="Hidden" VerticalScrollBarVisibility="Hidden" MinZoomFactor="0.75" Width="{Binding ActualWidth, ElementName=_outerSv}" Height="{Binding ActualHeight, ElementName=_outerSv}">
                         <Image Name="_img" Grid.Row="1" Source="{Binding SelectedItem.DisplayingImage.ImageLink}"/>
                     </ScrollViewer>
-                    <ListView Height="180" ItemsSource="{Binding SelectedItem.GalleryImages}" SelectionMode="Single" IsSwipeEnabled="False" Background="#FF630B0B" SelectedItem="{Binding SelectedItem.DisplayingImage, Mode=TwoWay}">
+                    <ListView Width="{Binding ActualWidth, ElementName=_outerSv}" Height="180" ItemsSource="{Binding SelectedItem.GalleryImages}" SelectionMode="Single" IsSwipeEnabled="False" Background="#FF630B0B" SelectedItem="{Binding SelectedItem.DisplayingImage, Mode=TwoWay}" ScrollViewer.HorizontalScrollMode="Enabled" ScrollViewer.HorizontalScrollBarVisibility="Hidden">
                         <ListView.Resources>
                             <ItemsPanelTemplate x:Key="ItemsPanelTemplate1">
                                 <ItemsStackPanel Orientation="Horizontal" />
