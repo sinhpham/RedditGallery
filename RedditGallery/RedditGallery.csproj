@@ -129,6 +129,7 @@
     <Compile Include="ViewModels\BindableBase.cs" />
     <Compile Include="ViewModels\MainVM.cs" />
     <Compile Include="ViewModels\SettingsVM.cs" />
+    <Compile Include="ViewModels\Utils.cs" />
     <Compile Include="Views\AppSettingsFlyout.xaml.cs">
       <DependentUpon>AppSettingsFlyout.xaml</DependentUpon>
     </Compile>

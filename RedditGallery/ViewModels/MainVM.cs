@@ -38,9 +38,16 @@ namespace RedditGallery.ViewModels
                 return retList;
             });
 
-            SubReddits.Add("pics");
-            SubReddits.Add("carporn");
-            SubReddits.Add("spaceporn");
+            var subList = Utils.Deserialize<List<string>>(App.SettingVM.SubList);
+
+            foreach (var sub in subList)
+            {
+                SubReddits.Add(sub);
+            }
+            SubReddits.CollectionChanged += (s, arg) =>
+            {
+                App.SettingVM.SubList = Utils.Serialize(SubReddits.ToList());
+            };
         }
 
         private PaginatedCollection<RedditImage> _images;

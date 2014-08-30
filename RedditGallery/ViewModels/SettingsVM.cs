@@ -13,7 +13,7 @@ namespace RedditGallery.ViewModels
     {
         public SettingsVM()
         {
-            
+
         }
 
         T GetSettingValueOrDefault<T>(T defaultVal, [CallerMemberName] string key = null)
@@ -38,6 +38,24 @@ namespace RedditGallery.ViewModels
                     AppSettings.Save();
                 }
                 OnPropertyChanged(() => FilterNSFW);
+            }
+        }
+
+        public string SubList
+        {
+            get
+            {
+                var defaultList = new List<string> { "pics", "carporn", "earthporn" };
+                var json = Utils.Serialize(defaultList);
+                return GetSettingValueOrDefault(json);
+            }
+            set
+            {
+                if (AddOrUpdateSettingValue(value))
+                {
+                    AppSettings.Save();
+                }
+                OnPropertyChanged(() => SubList);
             }
         }
     }
