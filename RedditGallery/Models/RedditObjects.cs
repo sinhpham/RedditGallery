@@ -33,7 +33,6 @@ namespace RedditGallery.Models
 
     public static class RedditImageParser
     {
-
         public static List<RedditImage> ParseFromJson(string jsonText, out string nextPath)
         {
             var ret = new List<RedditImage>();
@@ -56,7 +55,7 @@ namespace RedditGallery.Models
 
                 var itemObject = jVal.GetObject()["data"].GetObject();
 
-                var linkedImg = ProcessUrl(itemObject["url"].GetString(), out galleryUrls);
+                var linkedImg = ImgUrlExtractor.Extract(itemObject["url"].GetString(), out galleryUrls);
                 if (linkedImg != null && linkedImg.ThumbnailLink == null)
                 {
                     linkedImg.ThumbnailLink = itemObject["thumbnail"].GetString();
@@ -86,25 +85,11 @@ namespace RedditGallery.Models
 
             return ret;
         }
+    }
 
-        private static string GetThumbnailPathFromUrl(string inputUrl)
-        {
-            string ret = null;
-
-            var u = new Uri(inputUrl);
-            if (u.Host == "i.imgur.com")
-            {
-                var strArr = u.AbsolutePath.Split('.');
-                if (strArr.Length == 2)
-                {
-                    ret = "http://" + u.Host + strArr[0] + "m." + strArr[1];
-                }
-            }
-
-            return ret;
-        }
-
-        private static InternetImage ProcessUrl(string inputUrl, out List<InternetImage> galleryUrls)
+    public static class ImgUrlExtractor
+    {
+        public static InternetImage Extract(string inputUrl, out List<InternetImage> galleryUrls)
         {
             var ret = new InternetImage() { ImageLink = inputUrl };
             galleryUrls = null;
@@ -117,7 +102,6 @@ namespace RedditGallery.Models
                 desktopU.Host = "imgur.com";
                 u = desktopU.Uri;
             }
-
 
             if (u.Host == "imgur.com")
             {
@@ -164,6 +148,23 @@ namespace RedditGallery.Models
                     }
                     ret.ImageLink = imgLink;
                     ret.ThumbnailLink = GetThumbnailPathFromUrl(imgLink);
+                }
+            }
+
+            return ret;
+        }
+
+        private static string GetThumbnailPathFromUrl(string inputUrl)
+        {
+            string ret = null;
+
+            var u = new Uri(inputUrl);
+            if (u.Host == "i.imgur.com")
+            {
+                var strArr = u.AbsolutePath.Split('.');
+                if (strArr.Length == 2)
+                {
+                    ret = "http://" + u.Host + strArr[0] + "m." + strArr[1];
                 }
             }
 
