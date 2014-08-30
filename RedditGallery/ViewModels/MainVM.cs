@@ -48,6 +48,11 @@ namespace RedditGallery.ViewModels
             {
                 App.SettingVM.SubList = Utils.Serialize(SubReddits.ToList());
             };
+
+            if (SubReddits.Count > 0)
+            {
+                SubReddit = SubReddits[0];
+            }
         }
 
         private PaginatedCollection<RedditImage> _images;
@@ -173,7 +178,7 @@ namespace RedditGallery.ViewModels
             }
         }
 
-        string _subReddit = "pics";
+        string _subReddit;
         public string SubReddit
         {
             get { return _subReddit; }

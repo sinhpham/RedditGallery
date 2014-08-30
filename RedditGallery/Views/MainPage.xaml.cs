@@ -60,6 +60,16 @@ namespace RedditGallery.Views
                 }
             };
 
+            _subList.Items.VectorChanged += (s, arg) =>
+            {
+                _subList.SelectedItem = VM.SubReddit;
+            };
+
+            _subList.Loaded += (s, arg) =>
+            {
+                _subList.SelectedItem = VM.SubReddit;
+            };
+            
             App.SettingVM.PropertyChanged += (s, arg) =>
             {
                 if (arg.PropertyName == "FilterNSFW")
