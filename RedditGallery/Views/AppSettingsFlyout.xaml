@@ -5,6 +5,7 @@
     xmlns:local="using:RedditGallery.Views"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    DataContext="{Binding VM, RelativeSource={RelativeSource Self}}"
     mc:Ignorable="d"
     IconSource="Assets/SmallLogo.png"
     Title="General"
@@ -12,6 +13,6 @@
 
     <!-- This StackPanel acts as a root panel for vertical layout of the content sections -->
     <StackPanel VerticalAlignment="Stretch" HorizontalAlignment="Stretch" >
-        <ToggleSwitch Header="Filter NSFW content" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
+        <ToggleSwitch Header="Filter NSFW content" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" IsOn="{Binding FilterNSFW, Mode=TwoWay}" />
     </StackPanel>
 </SettingsFlyout>

@@ -47,7 +47,11 @@ namespace RedditGallery.Models
                     Permalink = permalink,
                     NSFW = itemObject["over_18"].GetBoolean()
                 };
-                ret.Add(item);
+
+                if (!(item.NSFW && App.SettingVM.FilterNSFW))
+                {
+                    ret.Add(item);
+                }
             }
 
             return ret;

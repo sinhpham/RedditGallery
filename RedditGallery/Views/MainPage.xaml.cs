@@ -59,6 +59,14 @@ namespace RedditGallery.Views
                     _subList.SelectedIndex = idx;
                 }
             };
+
+            App.SettingVM.PropertyChanged += (s, arg) =>
+            {
+                if (arg.PropertyName == "FilterNSFW")
+                {
+                    VM.RefreshCmd.Execute(null);
+                }
+            };
         }
 
         /// <summary>

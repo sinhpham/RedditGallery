@@ -1,4 +1,5 @@
-﻿using System;
+﻿using RedditGallery.ViewModels;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -22,6 +23,11 @@ namespace RedditGallery.Views
         public AppSettingsFlyout()
         {
             this.InitializeComponent();
+        }
+
+        public SettingsVM VM
+        {
+            get { return App.SettingVM; }
         }
     }
 }

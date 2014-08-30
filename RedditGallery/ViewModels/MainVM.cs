@@ -135,6 +135,8 @@ namespace RedditGallery.ViewModels
                     {
                         _images.Clear();
                         Images.NextPath = null;
+                        Images.HasMoreItems = true;
+                        Images.LoadMoreItemsAsync(20);
                     });
                 }
                 return _refreshCmd;
@@ -172,8 +174,7 @@ namespace RedditGallery.ViewModels
             {
                 if (SetProperty(ref _subReddit, value))
                 {
-                    _images.Clear();
-                    Images.NextPath = null;
+                    RefreshCmd.Execute(null);
                     OnPropertyChanged(() => IsInFav);
                 }
             }
@@ -189,7 +190,7 @@ namespace RedditGallery.ViewModels
     public class PaginatedCollection<T> : ObservableCollection<T>, ISupportIncrementalLoading
     {
         private Func<PaginatedCollection<T>, uint, Task<IEnumerable<T>>> load;
-        public bool HasMoreItems { get; protected set; }
+        public bool HasMoreItems { get; set; }
 
         public string NextPath { get; set; }
 
