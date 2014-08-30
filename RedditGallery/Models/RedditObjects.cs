@@ -31,9 +31,9 @@ namespace RedditGallery.Models
                 nextPath = "null";
             }
 
-            foreach (var itemValue in jArr)
+            ret = jArr.AsParallel().Select(jVal =>
             {
-                var itemObject = itemValue.GetObject()["data"].GetObject();
+                var itemObject = jVal.GetObject()["data"].GetObject();
 
                 var url = ProcessUrl(itemObject["url"].GetString());
                 var thumbnail = GetThumbnailPathFromUrl(url) ?? itemObject["thumbnail"].GetString();
@@ -47,12 +47,12 @@ namespace RedditGallery.Models
                     Permalink = permalink,
                     NSFW = itemObject["over_18"].GetBoolean()
                 };
-
-                if (!(item.NSFW && App.SettingVM.FilterNSFW))
+                if (item.NSFW && App.SettingVM.FilterNSFW)
                 {
-                    ret.Add(item);
+                    return null;
                 }
-            }
+                return item;
+            }).Where(rimg => rimg != null).ToList();
 
             return ret;
         }
@@ -80,7 +80,18 @@ namespace RedditGallery.Models
             var u = new Uri(inputUrl);
             if (u.Host == "imgur.com")
             {
-                ret = "http://i.imgur.com" + u.AbsolutePath + ".jpg";
+                if (u.AbsolutePath.StartsWith("/a/"))
+                {
+                    // TODO: handle album
+                }
+                else
+                {
+                    ret = "http://i.imgur.com" + u.AbsolutePath;
+                    if (!u.AbsolutePath.Contains('.'))
+                    {
+                        ret += ".jpg";
+                    }
+                }
             }
 
             return ret;
