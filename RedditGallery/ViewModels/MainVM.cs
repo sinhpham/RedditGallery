@@ -66,7 +66,7 @@ namespace RedditGallery.ViewModels
                     _copyLinkCmd = new RelayCommand(() =>
                     {
                         var dp = new Windows.ApplicationModel.DataTransfer.DataPackage();
-                        dp.SetText(SelectedImg.ImagePath);
+                        dp.SetText(SelectedImg.OriginalUrl);
                         Windows.ApplicationModel.DataTransfer.Clipboard.SetContent(dp);
                     });
                 }
@@ -101,7 +101,7 @@ namespace RedditGallery.ViewModels
                 {
                     _openLinkCmd = new RelayCommand(() =>
                     {
-                        Windows.System.Launcher.LaunchUriAsync(new Uri(SelectedImg.ImagePath));
+                        Windows.System.Launcher.LaunchUriAsync(new Uri(SelectedImg.OriginalUrl));
                     });
                 }
                 return _openLinkCmd;
