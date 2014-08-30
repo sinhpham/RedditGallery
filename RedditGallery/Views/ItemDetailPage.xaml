@@ -9,6 +9,9 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d">
+	<Page.Resources>
+		<common:BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"/>
+	</Page.Resources>
 
     <Page.BottomAppBar>
         <CommandBar>
@@ -66,7 +69,11 @@
                                Text="pull to..." />
                     </Grid>
                     <ScrollViewer Name="_sv" ZoomMode="Enabled" HorizontalScrollBarVisibility="Hidden" VerticalScrollBarVisibility="Hidden" MinZoomFactor="0.75" Width="{Binding ActualWidth, ElementName=_outerSv}" Height="{Binding ActualHeight, ElementName=_outerSv}">
-                        <Image Name="_img" Grid.Row="1" Source="{Binding SelectedItem.DisplayingImage.ImageLink}"/>
+                        <Grid>
+                    		<ProgressRing HorizontalAlignment="Center" VerticalAlignment="Center" Width="50" Height="50" IsActive="{Binding PageDataContext.ImageLoading, ElementName=pageRoot}"/>
+                    		<TextBlock HorizontalAlignment="Center" TextWrapping="Wrap" Text="Failed to load image!" VerticalAlignment="Center" FontSize="24" Visibility="{Binding PageDataContext.ImageFailed, Converter={StaticResource BooleanToVisibilityConverter}, ElementName=pageRoot}"/>
+                    		<Image x:Name="_img" Source="{Binding SelectedItem.DisplayingImage.ImageLink}" ImageOpened="_img_ImageOpened" ImageFailed="_img_ImageFailed"/>
+                    	</Grid>
                     </ScrollViewer>
                     <ListView Width="{Binding ActualWidth, ElementName=_outerSv}" Height="180" ItemsSource="{Binding SelectedItem.GalleryImages}" SelectionMode="Single" IsSwipeEnabled="False" Background="#FF630B0B" SelectedItem="{Binding SelectedItem.DisplayingImage, Mode=TwoWay}" ScrollViewer.HorizontalScrollMode="Enabled" ScrollViewer.HorizontalScrollBarVisibility="Hidden">
                         <ListView.Resources>

@@ -34,6 +34,12 @@ namespace RedditGallery.Views
             get { return App.MainVM; }
         }
 
+        private ObservableDictionary pageDataContext = new ObservableDictionary();
+        public ObservableDictionary PageDataContext
+        {
+            get { return this.pageDataContext; }
+        }
+
         /// <summary>
         /// NavigationHelper is used on each page to aid in navigation and 
         /// process lifetime management
@@ -48,6 +54,9 @@ namespace RedditGallery.Views
             this.InitializeComponent();
             this.navigationHelper = new NavigationHelper(this);
             this.navigationHelper.LoadState += navigationHelper_LoadState;
+
+            PageDataContext["ImageLoading"] = true;
+            PageDataContext["ImageFailed"] = false;
         }
 
         /// <summary>
@@ -139,6 +148,17 @@ namespace RedditGallery.Views
             _sv.Width = e.NewSize.Width;
             _sv.Height = e.NewSize.Height;
             _outerSv.ChangeView(null, 60.0f, null);
+        }
+
+        private void _img_ImageOpened(object sender, RoutedEventArgs e)
+        {
+            PageDataContext["ImageLoading"] = false;
+        }
+
+        private void _img_ImageFailed(object sender, ExceptionRoutedEventArgs e)
+        {
+            PageDataContext["ImageLoading"] = false;
+            PageDataContext["ImageFailed"] = true;
         }
     }
 }

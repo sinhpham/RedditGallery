@@ -110,6 +110,15 @@ namespace RedditGallery.Models
             galleryUrls = null;
 
             var u = new Uri(inputUrl);
+            if (u.Host == "m.imgur.com")
+            {
+                // Turn mobile page into normal page.
+                var desktopU = new UriBuilder(u);
+                desktopU.Host = "imgur.com";
+                u = desktopU.Uri;
+            }
+
+
             if (u.Host == "imgur.com")
             {
                 if (u.AbsolutePath.StartsWith("/a/"))

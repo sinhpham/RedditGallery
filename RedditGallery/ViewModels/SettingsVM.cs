@@ -1,4 +1,5 @@
-﻿using Refractored.Xam.Settings;
+﻿using RedditGallery.Common;
+using Refractored.Xam.Settings;
 using Refractored.Xam.Settings.Abstractions;
 using System;
 using System.Collections.Generic;
