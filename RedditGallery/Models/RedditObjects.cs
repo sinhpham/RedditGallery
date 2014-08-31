@@ -1,6 +1,7 @@
 ﻿using HtmlAgilityPack;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Net.Http;
 using System.Text;
@@ -51,37 +52,37 @@ namespace RedditGallery.Models
 
             ret = jArr.AsParallel().Select(jVal =>
             {
-                List<InternetImage> galleryUrls = null;
-
                 var itemObject = jVal.GetObject()["data"].GetObject();
+                var item = new RedditImage();
 
-                var linkedImg = ImgUrlExtractor.Extract(itemObject["url"].GetString(), out galleryUrls);
-                if (linkedImg != null && linkedImg.ThumbnailLink == null)
+                // Parser task here
+                Task.Run(async () =>
                 {
-                    linkedImg.ThumbnailLink = itemObject["thumbnail"].GetString();
-                }
+                    var extractRet = await ImgUrlExtractor.Extract(itemObject["url"].GetString());
+                    var linkedImg = extractRet.Item1;
+                    var galleryUrls = extractRet.Item2;
 
-                var permalink = "http://reddit.com" + itemObject["permalink"].GetString();
+                    if (linkedImg != null && linkedImg.ThumbnailLink == null)
+                    {
+                        linkedImg.ThumbnailLink = itemObject["thumbnail"].GetString();
+                    }
 
-                var item = new RedditImage()
-                {
-                    DisplayingImage = linkedImg,
-                    Permalink = permalink,
-                    OriginalUrl = itemObject["url"].GetString(),
-                    GalleryImages = galleryUrls,
-                    NSFW = itemObject["over_18"].GetBoolean()
-                };
-                if (item.DisplayingImage == null && item.GalleryImages != null && item.GalleryImages.Count > 1)
-                {
-                    item.DisplayingImage = item.GalleryImages[0];
-                }
+                    var permalink = "http://reddit.com" + itemObject["permalink"].GetString();
 
-                if (item.NSFW && App.SettingVM.FilterNSFW)
-                {
-                    return null;
-                }
+                    item.DisplayingImage = linkedImg;
+                    item.Permalink = permalink;
+                    item.OriginalUrl = itemObject["url"].GetString();
+                    item.GalleryImages = galleryUrls;
+                    item.NSFW = itemObject["over_18"].GetBoolean();
+
+                    if (item.DisplayingImage == null && item.GalleryImages != null && item.GalleryImages.Count > 1)
+                    {
+                        item.DisplayingImage = item.GalleryImages[0];
+                    }
+                });
+
                 return item;
-            }).Where(rimg => rimg != null).ToList();
+            }).ToList();
 
             return ret;
         }
@@ -89,10 +90,10 @@ namespace RedditGallery.Models
 
     public static class ImgUrlExtractor
     {
-        public static InternetImage Extract(string inputUrl, out List<InternetImage> galleryUrls)
+        public static async Task<Tuple<InternetImage, List<InternetImage>>> Extract(string inputUrl)
         {
             var ret = new InternetImage() { ImageLink = inputUrl };
-            galleryUrls = null;
+            List<InternetImage> galleryUrls = null;
 
             var u = new Uri(inputUrl);
             if (u.Host == "m.imgur.com")
@@ -110,37 +111,44 @@ namespace RedditGallery.Models
                     // Imgur albums.
                     galleryUrls = new List<InternetImage>();
                     ret = null;
+
                     var apArr = u.AbsolutePath.Split(new char[] { '/' }, StringSplitOptions.RemoveEmptyEntries);
 
                     var albumBlogLayoutUrl = "http://" + u.Host + "/" + apArr[0] + "/" + apArr[1] + "/layout/blog";
 
                     var hc = new HttpClient();
-                    var albumPage = hc.GetStringAsync(albumBlogLayoutUrl).Result;
-
-                    var htmlDoc = new HtmlDocument();
-                    htmlDoc.LoadHtml(albumPage);
-                    if (htmlDoc.ParseErrors != null && htmlDoc.ParseErrors.Count() > 0 && htmlDoc.DocumentNode != null)
+                    string albumPage = null;
+                    try
                     {
-                        var imgDivs = htmlDoc.DocumentNode.Descendants().Where(n => n.Name == "div" && n.Attributes.FirstOrDefault(a => a.Name == "class" && a.Value == "image") != null);
-                        galleryUrls = imgDivs.Select(iDiv =>
+                        albumPage = await hc.GetStringAsync(albumBlogLayoutUrl);
+                    }
+                    catch (Exception e)
+                    {
+                        Debug.WriteLine("Ex: {0}", e.Message);
+                    }
+                    if (albumPage != null)
+                    {
+                        var htmlDoc = new HtmlDocument();
+                        htmlDoc.LoadHtml(albumPage);
+                        if (htmlDoc.ParseErrors != null && htmlDoc.ParseErrors.Count() > 0 && htmlDoc.DocumentNode != null)
                         {
-                            var imgLink = string.Format("http://i.imgur.com/{0}.jpg", iDiv.Id);
-                            return new InternetImage()
+                            var imgDivs = htmlDoc.DocumentNode.Descendants().Where(n => n.Name == "div" && n.Attributes.FirstOrDefault(a => a.Name == "class" && a.Value == "image") != null);
+                            galleryUrls = imgDivs.Select(iDiv =>
                             {
-                                ImageLink = imgLink,
-                                ThumbnailLink = GetThumbnailPathFromUrl(imgLink)
-                            };
-                        }).ToList();
-
-                        if (galleryUrls.Count == 0)
-                        {
-                            var a = 0;
+                                var imgLink = string.Format("http://i.imgur.com/{0}.jpg", iDiv.Id);
+                                return new InternetImage()
+                                {
+                                    ImageLink = imgLink,
+                                    ThumbnailLink = GetThumbnailPathFromUrl(imgLink)
+                                };
+                            }).ToList();
                         }
                     }
                 }
                 else if (u.AbsolutePath.StartsWith("/gallery/"))
                 {
                     // TODO: parse gallery links.
+                    var a = 0;
                 }
                 else
                 {
@@ -160,7 +168,7 @@ namespace RedditGallery.Models
                 ret.ThumbnailLink = GetThumbnailPathFromUrl(ret.ImageLink);
             }
 
-            return ret;
+            return Tuple.Create(ret, galleryUrls);
         }
 
         private static string GetThumbnailPathFromUrl(string inputUrl)

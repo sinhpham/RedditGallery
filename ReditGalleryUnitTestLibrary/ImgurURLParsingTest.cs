@@ -13,37 +13,28 @@ namespace ReditGalleryUnitTestLibrary
         [TestMethod]
         public void MobileURL()
         {
-            var gallery = new List<InternetImage>();
-            var ii = ImgUrlExtractor.Extract("http://m.imgur.com/2r9QSsy", out gallery);
+            var extractRet = ImgUrlExtractor.Extract("http://m.imgur.com/2r9QSsy").Result;
 
-            Assert.AreEqual(ii.ImageLink, "http://i.imgur.com/2r9QSsy.jpg");
-            Assert.AreEqual(ii.ThumbnailLink, "http://i.imgur.com/2r9QSsym.jpg");
+            Assert.AreEqual(extractRet.Item1.ImageLink, "http://i.imgur.com/2r9QSsy.jpg");
+            Assert.AreEqual(extractRet.Item1.ThumbnailLink, "http://i.imgur.com/2r9QSsym.jpg");
         }
 
         [TestMethod]
         public void DirectImgLink()
         {
+            var extractRet = ImgUrlExtractor.Extract("http://i.imgur.com/403hsL9.jpg").Result;
 
-            var l = "http://i.imgur.com/403hsL9.jpg";
-
-            var gallery = new List<InternetImage>();
-            var ii = ImgUrlExtractor.Extract(l, out gallery);
-
-            Assert.AreEqual(ii.ImageLink, l);
-            Assert.AreEqual(ii.ThumbnailLink, "http://i.imgur.com/403hsL9m.jpg");
+            Assert.AreEqual(extractRet.Item1.ImageLink, "http://i.imgur.com/403hsL9.jpg");
+            Assert.AreEqual(extractRet.Item1.ThumbnailLink, "http://i.imgur.com/403hsL9m.jpg");
         }
 
         [TestMethod]
         public void GalleryImgLink()
         {
+            var extractRet = ImgUrlExtractor.Extract("http://imgur.com/gallery/MpoHLv0").Result;
 
-            var inputLink = "http://imgur.com/gallery/MpoHLv0";
-
-            var gallery = new List<InternetImage>();
-            var ii = ImgUrlExtractor.Extract(inputLink, out gallery);
-
-            Assert.AreEqual(ii.ImageLink, inputLink);
-            Assert.AreEqual(ii.ThumbnailLink, null);
+            Assert.AreEqual(extractRet.Item1.ImageLink, "http://imgur.com/gallery/MpoHLv0");
+            Assert.AreEqual(extractRet.Item1.ThumbnailLink, null);
         }
     }
 }
