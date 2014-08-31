@@ -60,14 +60,9 @@
                     <Grid Height="60">
                         <TextBlock x:Name="textBlock1"
                                HorizontalAlignment="Center"
-                               VerticalAlignment="Top"
+                               VerticalAlignment="Center"
                                Opacity="0"
-                               Text="close..." />
-                        <TextBlock x:Name="textBlock2"
-                               HorizontalAlignment="Center"
-                               VerticalAlignment="Bottom"
-                               Opacity="0"
-                               Text="pull to..." />
+                               Text="pull to close" FontSize="24" />
                     </Grid>
                     <ScrollViewer Name="_sv" ZoomMode="Enabled" HorizontalScrollBarVisibility="Hidden" VerticalScrollBarVisibility="Hidden" MinZoomFactor="0.75" Width="{Binding ActualWidth, ElementName=_outerSv}" Height="{Binding ActualHeight, ElementName=_outerSv}">
                         <Grid Name="_imgGrid">

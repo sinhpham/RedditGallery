@@ -135,10 +135,9 @@ namespace RedditGallery.Views
         {
             var sv = sender as ScrollViewer;
 
-            // text change
-            textBlock2.Opacity = sv.VerticalOffset / 100.0f;
+            
             if (sv.VerticalOffset == 0.0f)
-                textBlock1.Opacity = 0.7f;
+                textBlock1.Opacity = 1;
             else
                 textBlock1.Opacity = 0.3f;
 
