@@ -200,7 +200,7 @@
                 <RowDefinition Height="Auto"/>
             </Grid.RowDefinitions>
             <TextBlock Text="Reddit Gallery" FontSize="32" Margin="26,20,25,0" HorizontalAlignment="Center" Grid.ColumnSpan="2"/>
-            <ListView Name="_subList" Grid.Row="1" ItemsSource="{Binding SubReddits}" SelectionChanged="ListView_SelectionChanged" Grid.ColumnSpan="2">
+            <ListView Name="_subList" Grid.Row="1" ItemsSource="{Binding SubReddits}" SelectionChanged="ListView_SelectionChanged" Grid.ColumnSpan="2" CanReorderItems="True" AllowDrop="True">
                 <ListView.Resources>
                     <Style x:Key="ListViewItemStyle1" TargetType="ListViewItem">
                         <Setter Property="FontFamily" Value="{ThemeResource ContentControlThemeFontFamily}"/>
