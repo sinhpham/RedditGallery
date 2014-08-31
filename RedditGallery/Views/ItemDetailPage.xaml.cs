@@ -57,6 +57,21 @@ namespace RedditGallery.Views
 
             PageDataContext["ImageLoading"] = true;
             PageDataContext["ImageFailed"] = false;
+
+            if (VM.SelectedItem.NSFW && App.SettingVM.FilterNSFW)
+            {
+                PageDataContext["ShowNSFWWarning"] = true;
+            }
+            else
+            {
+                // Set image source binding in code to prevent flashing of NSFW content.
+                PageDataContext["ShowNSFWWarning"] = false;
+                var binding = new Binding
+                {
+                    Path = new PropertyPath("SelectedItem.DisplayingImage.ImageLink"),
+                };
+                _img.SetBinding(Image.SourceProperty, binding);
+            }
         }
 
         /// <summary>

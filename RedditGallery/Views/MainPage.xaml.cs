@@ -7,6 +7,7 @@ using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
+using System.Text;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
 using Windows.UI.Xaml;
@@ -14,6 +15,7 @@ using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Controls.Primitives;
 using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Input;
+using Windows.UI.Xaml.Markup;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Media.Animation;
 using Windows.UI.Xaml.Navigation;
@@ -170,6 +172,21 @@ namespace RedditGallery.Views
             {
                 PageDataContext[MenuOpenedKey] = false;
             }
+        }
+    }
+
+    public class NSFWTemplateSelector : DataTemplateSelector
+    {
+        public DataTemplate NSFWTemplate { get; set; }
+        public DataTemplate NormalTemplate { get; set; }
+        protected override DataTemplate SelectTemplateCore(object item)
+        {
+            var ri = (RedditImage)item;
+            if (ri.NSFW && App.SettingVM.FilterNSFW)
+            {
+                return NSFWTemplate;
+            }
+            return NormalTemplate;
         }
     }
 }

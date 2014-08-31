@@ -262,15 +262,28 @@
             IsSwipeEnabled="false"
             IsItemClickEnabled="True"
             ItemClick="ItemView_ItemClick" Margin="0,0,-10,0" Tapped="itemGridView_Tapped">
-                <GridView.ItemTemplate>
-                    <DataTemplate>
-                        <Grid HorizontalAlignment="Left" Width="240" Height="180">
-                            <Border Background="{ThemeResource ListViewItemPlaceholderBackgroundThemeBrush}">
-                                <Image Source="{Binding DisplayingImage.ThumbnailLink}" Stretch="Uniform"/>
-                            </Border>
-                        </Grid>
-                    </DataTemplate>
-                </GridView.ItemTemplate>
+            	<GridView.Resources>
+            		<DataTemplate x:Key="DataTemplate1">
+            			<Grid HorizontalAlignment="Left" Width="240" Height="180">
+            				<Border Background="{ThemeResource ListViewItemPlaceholderBackgroundThemeBrush}">
+            					<Image Source="{Binding DisplayingImage.ThumbnailLink}" Stretch="Uniform"/>
+                                
+            				</Border>
+            			</Grid>
+            		</DataTemplate>
+            		<DataTemplate x:Key="DataTemplate2">
+            			<Grid HorizontalAlignment="Left" Width="240" Height="180">
+            				<Border Background="{ThemeResource ListViewItemPlaceholderBackgroundThemeBrush}">
+            					<TextBlock TextWrapping="Wrap" Text="NSFW content" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="24"/>
+            				</Border>
+            			</Grid>
+            		</DataTemplate>
+                    <local:NSFWTemplateSelector NormalTemplate="{StaticResource DataTemplate1}" NSFWTemplate="{StaticResource DataTemplate2}" x:Key="templateSelector" />
+            	</GridView.Resources>
+                
+                <GridView.ItemTemplateSelector>
+                    <StaticResource ResourceKey="templateSelector"/>
+                </GridView.ItemTemplateSelector>
             </GridView>
 
             <!-- Back button and page title -->

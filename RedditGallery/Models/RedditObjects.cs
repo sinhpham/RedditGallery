@@ -53,9 +53,14 @@ namespace RedditGallery.Models
             ret = jArr.AsParallel().Select(jVal =>
             {
                 var itemObject = jVal.GetObject()["data"].GetObject();
-                var item = new RedditImage();
-
-                // Parser task here
+                var item = new RedditImage()
+                {
+                    Permalink = "http://reddit.com" + itemObject["permalink"].GetString(),
+                    OriginalUrl = itemObject["url"].GetString(),
+                    NSFW = itemObject["over_18"].GetBoolean(),
+                };
+                
+                // Parser task here to determine the correct image and album
                 Task.Run(async () =>
                 {
                     var extractRet = await ImgUrlExtractor.Extract(itemObject["url"].GetString());
@@ -67,13 +72,8 @@ namespace RedditGallery.Models
                         linkedImg.ThumbnailLink = itemObject["thumbnail"].GetString();
                     }
 
-                    var permalink = "http://reddit.com" + itemObject["permalink"].GetString();
-
                     item.DisplayingImage = linkedImg;
-                    item.Permalink = permalink;
-                    item.OriginalUrl = itemObject["url"].GetString();
                     item.GalleryImages = galleryUrls;
-                    item.NSFW = itemObject["over_18"].GetBoolean();
 
                     if (item.DisplayingImage == null && item.GalleryImages != null && item.GalleryImages.Count > 1)
                     {

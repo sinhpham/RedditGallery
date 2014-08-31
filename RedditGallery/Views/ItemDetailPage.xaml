@@ -72,7 +72,10 @@
                         <Grid>
                     		<ProgressRing HorizontalAlignment="Center" VerticalAlignment="Center" Width="50" Height="50" IsActive="{Binding PageDataContext.ImageLoading, ElementName=pageRoot}"/>
                     		<TextBlock HorizontalAlignment="Center" TextWrapping="Wrap" Text="Failed to load image!" VerticalAlignment="Center" FontSize="24" Visibility="{Binding PageDataContext.ImageFailed, Converter={StaticResource BooleanToVisibilityConverter}, ElementName=pageRoot}"/>
-                    		<Image x:Name="_img" Source="{Binding SelectedItem.DisplayingImage.ImageLink}" ImageOpened="_img_ImageOpened" ImageFailed="_img_ImageFailed"/>
+                    		<Image x:Name="_img" ImageOpened="_img_ImageOpened" ImageFailed="_img_ImageFailed"/>
+                    		<Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}" Visibility="{Binding PageDataContext.ShowNSFWWarning, Converter={StaticResource BooleanToVisibilityConverter}, ElementName=pageRoot}">
+                    			<TextBlock HorizontalAlignment="Center" TextWrapping="Wrap" Text="NSFW Content" VerticalAlignment="Center" FontSize="24"/>
+                    		</Grid>
                     	</Grid>
                     </ScrollViewer>
                     <ListView Width="{Binding ActualWidth, ElementName=_outerSv}" Height="180" ItemsSource="{Binding SelectedItem.GalleryImages}" SelectionMode="Single" IsSwipeEnabled="False" Background="#FF630B0B" SelectedItem="{Binding SelectedItem.DisplayingImage, Mode=TwoWay}" ScrollViewer.HorizontalScrollMode="Enabled" ScrollViewer.HorizontalScrollBarVisibility="Hidden">
