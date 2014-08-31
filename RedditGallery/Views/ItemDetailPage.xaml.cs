@@ -169,6 +169,7 @@ namespace RedditGallery.Views
         private void _img_ImageOpened(object sender, RoutedEventArgs e)
         {
             PageDataContext["ImageLoading"] = false;
+            _imgGrid.Width = _img.ActualWidth;
         }
 
         private void _img_ImageFailed(object sender, ExceptionRoutedEventArgs e)

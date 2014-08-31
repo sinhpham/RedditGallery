@@ -70,7 +70,7 @@
                                Text="pull to..." />
                     </Grid>
                     <ScrollViewer Name="_sv" ZoomMode="Enabled" HorizontalScrollBarVisibility="Hidden" VerticalScrollBarVisibility="Hidden" MinZoomFactor="0.75" Width="{Binding ActualWidth, ElementName=_outerSv}" Height="{Binding ActualHeight, ElementName=_outerSv}">
-                        <Grid>
+                        <Grid Name="_imgGrid">
                     		<ProgressRing HorizontalAlignment="Center" VerticalAlignment="Center" Width="50" Height="50" IsActive="{Binding PageDataContext.ImageLoading, ElementName=pageRoot}"/>
                     		<TextBlock HorizontalAlignment="Center" TextWrapping="Wrap" Text="Failed to load image!" VerticalAlignment="Center" FontSize="24" Visibility="{Binding PageDataContext.ImageFailed, Converter={StaticResource BooleanToVisibilityConverter}, ElementName=pageRoot}"/>
                     		<Image x:Name="_img" ImageOpened="_img_ImageOpened" ImageFailed="_img_ImageFailed"/>
