@@ -42,6 +42,19 @@ namespace RedditGallery.ViewModels
             }
         }
 
+        public bool OpenMenuOnStart
+        {
+            get { return GetSettingValueOrDefault(true); }
+            set
+            {
+                if (AddOrUpdateSettingValue(value))
+                {
+                    AppSettings.Save();
+                }
+                OnPropertyChanged(() => OpenMenuOnStart);
+            }
+        }
+
         public string SubList
         {
             get

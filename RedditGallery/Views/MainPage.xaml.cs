@@ -86,8 +86,6 @@ namespace RedditGallery.Views
                 }
             };
 
-            PageDataContext[MenuOpenedKey] = true;
-
             PageDataContext.MapChanged += (s, arg) =>
             {
                 if (arg.Key == MenuOpenedKey)
@@ -102,6 +100,8 @@ namespace RedditGallery.Views
                     }
                 }
             };
+
+            PageDataContext[MenuOpenedKey] = App.SettingVM.OpenMenuOnStart;
         }
 
         /// <summary>

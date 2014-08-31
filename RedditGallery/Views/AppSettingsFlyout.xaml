@@ -14,5 +14,6 @@
     <!-- This StackPanel acts as a root panel for vertical layout of the content sections -->
     <StackPanel VerticalAlignment="Stretch" HorizontalAlignment="Stretch" >
         <ToggleSwitch Header="Filter NSFW content" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" IsOn="{Binding FilterNSFW, Mode=TwoWay}" />
+        <ToggleSwitch Header="Open menu on start" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" IsOn="{Binding OpenMenuOnStart, Mode=TwoWay}" />
     </StackPanel>
 </SettingsFlyout>
