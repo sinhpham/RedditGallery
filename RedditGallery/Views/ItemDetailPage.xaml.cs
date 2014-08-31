@@ -57,6 +57,7 @@ namespace RedditGallery.Views
 
             PageDataContext["ImageLoading"] = true;
             PageDataContext["ImageFailed"] = false;
+            PageDataContext["ShowBackButton"] = false;
 
             if (VM.SelectedItem.NSFW && App.SettingVM.FilterNSFW)
             {
@@ -174,6 +175,12 @@ namespace RedditGallery.Views
         {
             PageDataContext["ImageLoading"] = false;
             PageDataContext["ImageFailed"] = true;
+        }
+
+        private void pageRoot_PointerMoved(object sender, PointerRoutedEventArgs e)
+        {
+            
+            PageDataContext["ShowBackButton"] = true;
         }
     }
 }

@@ -8,6 +8,7 @@
     xmlns:common="using:RedditGallery.Common"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    PointerMoved="pageRoot_PointerMoved"
     mc:Ignorable="d">
 	<Page.Resources>
 		<common:BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"/>
@@ -113,7 +114,7 @@
                         VerticalAlignment="Top"
                         AutomationProperties.Name="Back"
                         AutomationProperties.AutomationId="BackButton"
-                        AutomationProperties.ItemType="Navigation Button"/>
+                        AutomationProperties.ItemType="Navigation Button" Visibility="{Binding PageDataContext.ShowBackButton, Converter={StaticResource BooleanToVisibilityConverter}, ElementName=pageRoot}"/>
         </Grid>
     </Grid>
 </Page>
