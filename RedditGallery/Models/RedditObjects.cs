@@ -6,7 +6,9 @@ using System.Linq;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
+using Windows.ApplicationModel.Core;
 using Windows.Data.Json;
+using Windows.UI.Core;
 
 namespace RedditGallery.Models
 {
@@ -72,13 +74,18 @@ namespace RedditGallery.Models
                         linkedImg.ThumbnailLink = itemObject["thumbnail"].GetString();
                     }
 
-                    item.DisplayingImage = linkedImg;
-                    item.GalleryImages = galleryUrls;
-
-                    if (item.DisplayingImage == null && item.GalleryImages != null && item.GalleryImages.Count > 1)
+                    if (linkedImg == null && galleryUrls != null && galleryUrls.Count > 0)
                     {
-                        item.DisplayingImage = item.GalleryImages[0];
+                        linkedImg = galleryUrls[0];
                     }
+
+                    // Modify UI, so we need to run this on UI thread.
+                    CoreApplication.MainView.CoreWindow.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
+                    {
+                        item.DisplayingImage = linkedImg;
+                    });
+                    
+                    item.GalleryImages = galleryUrls;
                 });
 
                 return item;
