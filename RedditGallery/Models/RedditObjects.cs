@@ -60,7 +60,7 @@ namespace RedditGallery.Models
                 {
                     linkedImg.ThumbnailLink = itemObject["thumbnail"].GetString();
                 }
-                
+
                 var permalink = "http://reddit.com" + itemObject["permalink"].GetString();
 
                 var item = new RedditImage()
@@ -138,6 +138,10 @@ namespace RedditGallery.Models
                         }
                     }
                 }
+                else if (u.AbsolutePath.StartsWith("/gallery/"))
+                {
+                    // TODO: parse gallery links.
+                }
                 else
                 {
                     // Imgur single image page.
@@ -149,6 +153,11 @@ namespace RedditGallery.Models
                     ret.ImageLink = imgLink;
                     ret.ThumbnailLink = GetThumbnailPathFromUrl(imgLink);
                 }
+            }
+            else if (u.Host == "i.imgur.com")
+            {
+                // Direct link to an image.
+                ret.ThumbnailLink = GetThumbnailPathFromUrl(ret.ImageLink);
             }
 
             return ret;
