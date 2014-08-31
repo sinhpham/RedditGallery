@@ -148,7 +148,6 @@ namespace RedditGallery.ViewModels
                         _images.Clear();
                         Images.NextPath = null;
                         Images.HasMoreItems = true;
-                        Images.LoadMoreItemsAsync(20);
                     });
                 }
                 return _refreshCmd;
