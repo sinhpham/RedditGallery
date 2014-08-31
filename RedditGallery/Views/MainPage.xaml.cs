@@ -35,6 +35,14 @@ namespace RedditGallery.Views
             get { return App.MainVM; }
         }
 
+        private ObservableDictionary pageDataContext = new ObservableDictionary();
+        public ObservableDictionary PageDataContext
+        {
+            get { return this.pageDataContext; }
+        }
+
+        static readonly string MenuOpenedKey = "MenuOpened";
+
         /// <summary>
         /// NavigationHelper is used on each page to aid in navigation and 
         /// process lifetime management
@@ -75,6 +83,23 @@ namespace RedditGallery.Views
                 if (arg.PropertyName == "FilterNSFW")
                 {
                     VM.RefreshCmd.Execute(null);
+                }
+            };
+
+            PageDataContext[MenuOpenedKey] = true;
+
+            PageDataContext.MapChanged += (s, arg) =>
+            {
+                if (arg.Key == MenuOpenedKey)
+                {
+                    if ((bool)PageDataContext[MenuOpenedKey])
+                    {
+                        _showMenu.Begin();
+                    }
+                    else
+                    {
+                        _hideMenu.Begin();
+                    }
                 }
             };
         }
@@ -124,21 +149,6 @@ namespace RedditGallery.Views
             this.Frame.Navigate(typeof(ItemDetailPage));
         }
 
-        bool _expanded = true;
-        private void backButton_Click(object sender, RoutedEventArgs e)
-        {
-            if (_expanded)
-            {
-                _hideMenu.Begin();
-                _expanded = false;
-            }
-            else
-            {
-                _showMenu.Begin();
-                _expanded = true;
-            }
-        }
-
         private void ListView_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             if (e.AddedItems.Count > 0)
@@ -151,24 +161,14 @@ namespace RedditGallery.Views
 
         private void Rectangle_Tapped(object sender, TappedRoutedEventArgs e)
         {
-            if (_expanded)
-            {
-                _hideMenu.Begin();
-                _expanded = false;
-            }
-            else
-            {
-                _showMenu.Begin();
-                _expanded = true;
-            }
+            PageDataContext[MenuOpenedKey] = !(bool)PageDataContext[MenuOpenedKey];
         }
 
         private void itemGridView_Tapped(object sender, TappedRoutedEventArgs e)
         {
-            if (_expanded)
+            if ((bool)PageDataContext[MenuOpenedKey])
             {
-                _hideMenu.Begin();
-                _expanded = false;
+                PageDataContext[MenuOpenedKey] = false;
             }
         }
     }

@@ -282,7 +282,7 @@
                     <ColumnDefinition Width="Auto"/>
                 </Grid.ColumnDefinitions>
                 <Rectangle Grid.ColumnSpan="4" Tapped="Rectangle_Tapped" Fill="DodgerBlue"/>
-                <AppBarToggleButton Icon="List" Click="backButton_Click" Style="{StaticResource AppBarToggleButtonStyle1}" VerticalAlignment="Center" IsChecked="True" Margin="20,0"/>
+                <AppBarToggleButton Icon="List" Style="{StaticResource AppBarToggleButtonStyle1}" VerticalAlignment="Center" IsChecked="{Binding PageDataContext.MenuOpened, ElementName=pageRoot, Mode=TwoWay}" Margin="20,0"/>
                 <TextBlock x:Name="pageTitle" Text="{Binding SubReddit, Mode=TwoWay}" FontSize="32" Grid.Column="1" 
                         TextWrapping="NoWrap" VerticalAlignment="Center" IsHitTestVisible="False"/>
                 <Button Grid.Column="2" Content="Sort" FontFamily="Global User Interface" >
