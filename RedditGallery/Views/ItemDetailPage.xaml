@@ -74,7 +74,9 @@
                     		</Grid>
                     	</Grid>
                     </ScrollViewer>
-                    <ListView Width="{Binding ActualWidth, ElementName=_outerSv}" Height="180" ItemsSource="{Binding SelectedItem.GalleryImages}" SelectionMode="Single" IsSwipeEnabled="False" Background="#FF630B0B" SelectedItem="{Binding SelectedItem.DisplayingImage, Mode=TwoWay}" ScrollViewer.HorizontalScrollMode="Enabled" ScrollViewer.HorizontalScrollBarVisibility="Hidden">
+                    <ListView Name="_galleryList" Width="{Binding ActualWidth, ElementName=_outerSv}" Height="180" SelectionMode="Single" IsSwipeEnabled="False" Background="#FF630B0B"
+                              Visibility="{Binding PageDataContext.ShowGalleryList, Converter={StaticResource BooleanToVisibilityConverter}, ElementName=pageRoot}"
+                              ScrollViewer.HorizontalScrollMode="Enabled" ScrollViewer.HorizontalScrollBarVisibility="Hidden">
                         <ListView.Resources>
                             <ItemsPanelTemplate x:Key="ItemsPanelTemplate1">
                                 <ItemsStackPanel Orientation="Horizontal" />

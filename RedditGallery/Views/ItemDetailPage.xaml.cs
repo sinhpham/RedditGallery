@@ -58,20 +58,33 @@ namespace RedditGallery.Views
             PageDataContext["ImageLoading"] = true;
             PageDataContext["ImageFailed"] = false;
             PageDataContext["ShowBackButton"] = false;
+            PageDataContext["ShowGalleryList"] = false;
 
             if (VM.SelectedItem.NSFW && App.SettingVM.FilterNSFW)
             {
                 PageDataContext["ShowNSFWWarning"] = true;
+                
             }
             else
             {
                 // Set image source binding in code to prevent flashing of NSFW content.
                 PageDataContext["ShowNSFWWarning"] = false;
+
                 var binding = new Binding
                 {
                     Path = new PropertyPath("SelectedItem.DisplayingImage.ImageLink"),
                 };
                 _img.SetBinding(Image.SourceProperty, binding);
+
+                if (VM.SelectedItem.GalleryImages != null)
+                {
+                    // Need to show gallery list.
+                    PageDataContext["ShowGalleryList"] = true;
+                    var isBinding = new Binding { Path = new PropertyPath("SelectedItem.GalleryImages") };
+                    _galleryList.SetBinding(ListView.ItemsSourceProperty, isBinding);
+                    var currItemBinding = new Binding { Path = new PropertyPath("SelectedItem.DisplayingImage"), Mode = BindingMode.TwoWay };
+                    _galleryList.SetBinding(ListView.SelectedItemProperty, currItemBinding);
+                }
             }
         }
 
@@ -121,6 +134,11 @@ namespace RedditGallery.Views
         protected override void OnNavigatedFrom(NavigationEventArgs e)
         {
             navigationHelper.OnNavigatedFrom(e);
+
+            if ((bool)PageDataContext["ShowGalleryList"] == true)
+            {
+                _galleryList.ClearValue(ListView.SelectedItemProperty);
+            }
         }
 
         #endregion
@@ -179,7 +197,6 @@ namespace RedditGallery.Views
 
         private void pageRoot_PointerMoved(object sender, PointerRoutedEventArgs e)
         {
-            
             PageDataContext["ShowBackButton"] = true;
         }
     }
