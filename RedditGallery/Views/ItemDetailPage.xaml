@@ -74,7 +74,7 @@
                     		</Grid>
                     	</Grid>
                     </ScrollViewer>
-                    <ListView Name="_galleryList" Width="{Binding ActualWidth, ElementName=_outerSv}" Height="180" SelectionMode="Single" IsSwipeEnabled="False" Background="#FF630B0B"
+                    <ListView Name="_galleryList" Width="{Binding ActualWidth, ElementName=_outerSv}" Height="180" SelectionMode="Single" IsSwipeEnabled="False" Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
                               Visibility="{Binding PageDataContext.ShowGalleryList, Converter={StaticResource BooleanToVisibilityConverter}, ElementName=pageRoot}"
                               ScrollViewer.HorizontalScrollMode="Enabled" ScrollViewer.HorizontalScrollBarVisibility="Hidden">
                         <ListView.Resources>
