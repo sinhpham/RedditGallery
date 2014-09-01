@@ -19,7 +19,7 @@ namespace RedditGallery.Models
         public string ThumbnailLink { get; set; }
     }
 
-    public class RedditImage : RedditGallery.ViewModels.BindableBase
+    public class RedditImage : RedditGallery.ViewModels.NotifyingClass
     {
         InternetImage _displayingImage;
         public InternetImage DisplayingImage

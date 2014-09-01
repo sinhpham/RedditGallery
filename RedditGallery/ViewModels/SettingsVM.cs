@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace RedditGallery.ViewModels
 {
-    public class SettingsVM : BindableBase
+    public class SettingsVM : NotifyingClass
     {
         public SettingsVM()
         {

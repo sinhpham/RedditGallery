@@ -13,7 +13,7 @@ using Windows.UI.Xaml.Data;
 
 namespace RedditGallery.ViewModels
 {
-    public class MainVM : BindableBase
+    public class MainVM : NotifyingClass
     {
         public MainVM()
         {

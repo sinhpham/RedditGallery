@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace RedditGallery.ViewModels
 {
-    public abstract class BindableBase : INotifyPropertyChanged
+    public abstract class NotifyingClass : INotifyPropertyChanged
     {
         public event PropertyChangedEventHandler PropertyChanged;
 
