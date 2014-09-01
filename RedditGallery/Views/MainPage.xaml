@@ -231,7 +231,7 @@
                 </ListView.ItemContainerStyle>
             </ListView>
             <AppBarToggleButton Grid.Row="2" Icon="Favorite" IsChecked="{Binding IsInFav, Mode=TwoWay}" Style="{StaticResource AppBarToggleButtonStyle1}" Margin="0,0,5,0"/>
-            <TextBox Grid.Row="2" Text="{Binding SubReddit, Mode=TwoWay}" FontSize="24" Grid.Column="1"/>
+            <TextBox Grid.Row="2" Text="{Binding SubReddit, Mode=TwoWay}" FontSize="24" Grid.Column="1" KeyUp="TextBox_KeyUp"/>
 
         </Grid>
 

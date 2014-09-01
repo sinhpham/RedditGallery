@@ -173,6 +173,16 @@ namespace RedditGallery.Views
                 PageDataContext[MenuOpenedKey] = false;
             }
         }
+
+        private void TextBox_KeyUp(object sender, KeyRoutedEventArgs e)
+        {
+            if (e.Key == Windows.System.VirtualKey.Enter)
+            {
+                var tb = (TextBox)sender;
+                tb.GetBindingExpression(TextBox.TextProperty).UpdateSource();
+                //_menuAppName.Focus(Windows.UI.Xaml.FocusState.Programmatic);
+            }
+        }
     }
 
     public class NSFWTemplateSelector : DataTemplateSelector
