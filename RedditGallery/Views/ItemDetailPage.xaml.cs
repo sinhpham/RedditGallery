@@ -58,32 +58,28 @@ namespace RedditGallery.Views
             PageDataContext["ImageLoading"] = true;
             PageDataContext["ImageFailed"] = false;
             PageDataContext["ShowBackButton"] = false;
-            PageDataContext["ShowGalleryList"] = false;
+
+            PageDataContext["MaxHeight"] = Window.Current.Bounds.Height;
+            PageDataContext["MaxWidth"] = Window.Current.Bounds.Width;
 
             if (VM.SelectedItem.NSFW && App.SettingVM.FilterNSFW)
             {
                 PageDataContext["ShowNSFWWarning"] = true;
-                
+
             }
             else
             {
                 // Set image source binding in code to prevent flashing of NSFW content.
                 PageDataContext["ShowNSFWWarning"] = false;
 
-                var binding = new Binding
-                {
-                    Path = new PropertyPath("SelectedItem.DisplayingImage.ImageLink"),
-                };
-                _img.SetBinding(Image.SourceProperty, binding);
-
                 if (VM.SelectedItem.GalleryImages != null)
                 {
                     // Need to show gallery list.
-                    PageDataContext["ShowGalleryList"] = true;
+
                     var isBinding = new Binding { Path = new PropertyPath("SelectedItem.GalleryImages") };
-                    _galleryList.SetBinding(ListView.ItemsSourceProperty, isBinding);
+                    //_galleryList.SetBinding(ListView.ItemsSourceProperty, isBinding);
                     var currItemBinding = new Binding { Path = new PropertyPath("SelectedItem.DisplayingImage"), Mode = BindingMode.TwoWay };
-                    _galleryList.SetBinding(ListView.SelectedItemProperty, currItemBinding);
+                    //_galleryList.SetBinding(ListView.SelectedItemProperty, currItemBinding);
                 }
             }
         }
@@ -110,9 +106,6 @@ namespace RedditGallery.Views
             // TODO: Assign a bindable group to this.DefaultViewModel["Group"]
             // TODO: Assign a collection of bindable items to this.DefaultViewModel["Items"]
             // TODO: Assign the selected item to this.flipView.SelectedItem
-
-            _img.MaxHeight = Window.Current.Bounds.Height;
-            _img.MaxWidth = Window.Current.Bounds.Width;
         }
 
         #region NavigationHelper registration
@@ -134,18 +127,14 @@ namespace RedditGallery.Views
         protected override void OnNavigatedFrom(NavigationEventArgs e)
         {
             navigationHelper.OnNavigatedFrom(e);
-
-            if ((bool)PageDataContext["ShowGalleryList"] == true)
-            {
-                _galleryList.ClearValue(ListView.SelectedItemProperty);
-            }
         }
 
         #endregion
 
         private void _outerSv_Loaded(object sender, RoutedEventArgs e)
         {
-            _outerSv.ChangeView(null, 60.0f, null);
+            var outerSv = (ScrollViewer)sender;
+            outerSv.ChangeView(null, 60.0f, null);
         }
 
         bool _isPullRefresh = false;
@@ -153,11 +142,11 @@ namespace RedditGallery.Views
         {
             var sv = sender as ScrollViewer;
 
-            
-            if (sv.VerticalOffset == 0.0f)
-                textBlock1.Opacity = 1;
-            else
-                textBlock1.Opacity = 0.3f;
+
+            //if (sv.VerticalOffset == 0.0f)
+            //    textBlock1.Opacity = 1;
+            //else
+            //    textBlock1.Opacity = 0.3f;
 
             if (sv.VerticalOffset != 0.0f)
                 _isPullRefresh = true;
@@ -178,15 +167,18 @@ namespace RedditGallery.Views
 
         private void _outerSv_SizeChanged(object sender, SizeChangedEventArgs e)
         {
-            _sv.Width = e.NewSize.Width;
-            _sv.Height = e.NewSize.Height;
-            _outerSv.ChangeView(null, 60.0f, null);
+            //_sv.Width = e.NewSize.Width;
+            //_sv.Height = e.NewSize.Height;
+            //_outerSv.ChangeView(null, 60.0f, null);
         }
 
         private void _img_ImageOpened(object sender, RoutedEventArgs e)
         {
             PageDataContext["ImageLoading"] = false;
-            _imgGrid.Width = _img.ActualWidth;
+
+            var img = (Image)sender;
+            var imgGrid = (Grid)img.Parent;
+            imgGrid.Width = img.ActualWidth;
         }
 
         private void _img_ImageFailed(object sender, ExceptionRoutedEventArgs e)
@@ -198,6 +190,25 @@ namespace RedditGallery.Views
         private void pageRoot_PointerMoved(object sender, PointerRoutedEventArgs e)
         {
             PageDataContext["ShowBackButton"] = true;
+        }
+    }
+
+    public class RedditImgGalleryVisibilityConverter : IValueConverter
+    {
+        public object Convert(object value, Type targetType, object parameter, string language)
+        {
+            var rImg = (RedditImage)value;
+            if (rImg.GalleryImages != null && rImg.GalleryImages.Count > 0)
+            {
+                // Has a gallery.
+                return rImg.NSFW && App.SettingVM.FilterNSFW ? Visibility.Collapsed : Visibility.Visible;
+            }
+            return Visibility.Collapsed;
+        }
+
+        public object ConvertBack(object value, Type targetType, object parameter, string language)
+        {
+            throw new NotImplementedException();
         }
     }
 }

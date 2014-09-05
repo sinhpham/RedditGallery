@@ -25,13 +25,35 @@ namespace RedditGallery.Models
         public InternetImage DisplayingImage
         {
             get { return _displayingImage; }
-            set { SetProperty(ref _displayingImage, value); }
+            set
+            {
+                SetProperty(ref _displayingImage, value);
+                OnPropertyChanged(string.Empty);
+            }
         }
         public string Permalink { get; set; }
         public string OriginalUrl { get; set; }
         public bool NSFW { get; set; }
 
-        public List<InternetImage> GalleryImages { get; set; }
+        public List<InternetImage> GalleryImages
+        {
+            get;
+            set;
+        }
+
+        double _svWidth = 1920;
+        public double SvWidth
+        {
+            get { return _svWidth; }
+            set { SetProperty(ref _svWidth, value); }
+        }
+
+        double _svHeight = 1080;
+        public double SvHeight
+        {
+            get { return _svHeight; }
+            set { SetProperty(ref _svHeight, value); }
+        }
     }
 
     public static class RedditImageParser
@@ -61,7 +83,7 @@ namespace RedditGallery.Models
                     OriginalUrl = itemObject["url"].GetString(),
                     NSFW = itemObject["over_18"].GetBoolean(),
                 };
-                
+
                 // Parser task here to determine the correct image and album
                 Task.Run(async () =>
                 {
@@ -84,7 +106,7 @@ namespace RedditGallery.Models
                     {
                         item.DisplayingImage = linkedImg;
                     });
-                    
+
                     item.GalleryImages = galleryUrls;
                 });
 
