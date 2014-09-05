@@ -34,10 +34,10 @@ namespace RedditGallery.Views
             get { return App.MainVM; }
         }
 
-        private ObservableDictionary pageDataContext = new ObservableDictionary();
+        private ObservableDictionary _pageDataContext = new ObservableDictionary();
         public ObservableDictionary PageDataContext
         {
-            get { return this.pageDataContext; }
+            get { return this._pageDataContext; }
         }
 
         /// <summary>
@@ -55,37 +55,7 @@ namespace RedditGallery.Views
             this.navigationHelper = new NavigationHelper(this);
             this.navigationHelper.LoadState += navigationHelper_LoadState;
 
-            PageDataContext["ImageLoading"] = true;
-            PageDataContext["ImageFailed"] = false;
             PageDataContext["ShowBackButton"] = false;
-            PageDataContext["ShowGalleryList"] = false;
-
-            if (VM.SelectedItem.NSFW && App.SettingVM.FilterNSFW)
-            {
-                PageDataContext["ShowNSFWWarning"] = true;
-                
-            }
-            else
-            {
-                // Set image source binding in code to prevent flashing of NSFW content.
-                PageDataContext["ShowNSFWWarning"] = false;
-
-                var binding = new Binding
-                {
-                    Path = new PropertyPath("SelectedItem.DisplayingImage.ImageLink"),
-                };
-                _img.SetBinding(Image.SourceProperty, binding);
-
-                if (VM.SelectedItem.GalleryImages != null)
-                {
-                    // Need to show gallery list.
-                    PageDataContext["ShowGalleryList"] = true;
-                    var isBinding = new Binding { Path = new PropertyPath("SelectedItem.GalleryImages") };
-                    _galleryList.SetBinding(ListView.ItemsSourceProperty, isBinding);
-                    var currItemBinding = new Binding { Path = new PropertyPath("SelectedItem.DisplayingImage"), Mode = BindingMode.TwoWay };
-                    _galleryList.SetBinding(ListView.SelectedItemProperty, currItemBinding);
-                }
-            }
         }
 
         /// <summary>
@@ -110,9 +80,6 @@ namespace RedditGallery.Views
             // TODO: Assign a bindable group to this.DefaultViewModel["Group"]
             // TODO: Assign a collection of bindable items to this.DefaultViewModel["Items"]
             // TODO: Assign the selected item to this.flipView.SelectedItem
-
-            _img.MaxHeight = Window.Current.Bounds.Height;
-            _img.MaxWidth = Window.Current.Bounds.Width;
         }
 
         #region NavigationHelper registration
@@ -135,65 +102,14 @@ namespace RedditGallery.Views
         {
             navigationHelper.OnNavigatedFrom(e);
 
-            if ((bool)PageDataContext["ShowGalleryList"] == true)
-            {
-                _galleryList.ClearValue(ListView.SelectedItemProperty);
-            }
+            //if ((bool)PageDataContext["ShowGalleryList"] == true)
+            //{
+            //    _galleryList.ClearValue(ListView.SelectedItemProperty);
+            //}
         }
 
         #endregion
 
-        private void _outerSv_Loaded(object sender, RoutedEventArgs e)
-        {
-            _outerSv.ChangeView(null, 60.0f, null);
-        }
-
-        bool _isPullRefresh = false;
-        private void _outerSv_ViewChanged(object sender, ScrollViewerViewChangedEventArgs e)
-        {
-            var sv = sender as ScrollViewer;
-
-            
-            if (sv.VerticalOffset == 0.0f)
-                textBlock1.Opacity = 1;
-            else
-                textBlock1.Opacity = 0.3f;
-
-            if (sv.VerticalOffset != 0.0f)
-                _isPullRefresh = true;
-
-            if (!e.IsIntermediate)
-            {
-                if (sv.VerticalOffset == 0.0f && _isPullRefresh)
-                {
-                    Windows.UI.Core.CoreWindow.GetForCurrentThread().Dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.Normal, () =>
-                    {
-                        navigationHelper.GoBackCommand.Execute(null);
-                    });
-                }
-                _isPullRefresh = false;
-                //sv.ChangeView(null, 60.0f, null);
-            }
-        }
-
-        private void _outerSv_SizeChanged(object sender, SizeChangedEventArgs e)
-        {
-            _sv.Width = e.NewSize.Width;
-            _sv.Height = e.NewSize.Height;
-            _outerSv.ChangeView(null, 60.0f, null);
-        }
-
-        private void _img_ImageOpened(object sender, RoutedEventArgs e)
-        {
-            PageDataContext["ImageLoading"] = false;
-            _imgGrid.Width = _img.ActualWidth;
-        }
-
-        private void _img_ImageFailed(object sender, ExceptionRoutedEventArgs e)
-        {
-            PageDataContext["ImageLoading"] = false;
-            PageDataContext["ImageFailed"] = true;
-        }
 
         private void pageRoot_PointerMoved(object sender, PointerRoutedEventArgs e)
         {
