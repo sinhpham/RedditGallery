@@ -71,16 +71,6 @@ namespace RedditGallery.Views
             {
                 // Set image source binding in code to prevent flashing of NSFW content.
                 PageDataContext["ShowNSFWWarning"] = false;
-
-                if (VM.SelectedItem.GalleryImages != null)
-                {
-                    // Need to show gallery list.
-
-                    var isBinding = new Binding { Path = new PropertyPath("SelectedItem.GalleryImages") };
-                    //_galleryList.SetBinding(ListView.ItemsSourceProperty, isBinding);
-                    var currItemBinding = new Binding { Path = new PropertyPath("SelectedItem.DisplayingImage"), Mode = BindingMode.TwoWay };
-                    //_galleryList.SetBinding(ListView.SelectedItemProperty, currItemBinding);
-                }
             }
         }
 
@@ -178,7 +168,7 @@ namespace RedditGallery.Views
 
             var img = (Image)sender;
             var imgGrid = (Grid)img.Parent;
-            imgGrid.Width = img.ActualWidth;
+            imgGrid.Width = img.ActualWidth != 0 ? img.ActualWidth : imgGrid.Width;
         }
 
         private void _img_ImageFailed(object sender, ExceptionRoutedEventArgs e)
