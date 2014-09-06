@@ -106,11 +106,6 @@ namespace RedditGallery.Views
         protected override void OnNavigatedFrom(NavigationEventArgs e)
         {
             navigationHelper.OnNavigatedFrom(e);
-
-            //if ((bool)PageDataContext["ShowGalleryList"] == true)
-            //{
-            //    _galleryList.ClearValue(ListView.SelectedItemProperty);
-            //}
         }
 
         #endregion

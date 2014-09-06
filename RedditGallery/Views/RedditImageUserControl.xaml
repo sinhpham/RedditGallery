@@ -16,49 +16,47 @@
         <common:BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"/>
     </UserControl.Resources>
 
-    <Grid Name="_rootGrid">
-        <ScrollViewer Name="_outerSv" Loaded="_outerSv_Loaded" ViewChanged="_outerSv_ViewChanged" SizeChanged="_outerSv_SizeChanged" HorizontalScrollBarVisibility="Hidden" VerticalScrollBarVisibility="Hidden">
-            <StackPanel>
-                <Grid Height="60">
-                    <TextBlock x:Name="textBlock1"
-                               HorizontalAlignment="Center"
-                               VerticalAlignment="Center"
-                               Opacity="0"
-                               Text="pull to close" FontSize="24" />
-                </Grid>
-                <ScrollViewer Name="_sv" ZoomMode="Enabled" HorizontalScrollBarVisibility="Hidden" VerticalScrollBarVisibility="Hidden" MinZoomFactor="0.75" Width="{Binding ActualWidth, ElementName=_outerSv}" Height="{Binding ActualHeight, ElementName=_outerSv}">
-                    <Grid Name="_imgGrid">
-                        <ProgressRing HorizontalAlignment="Center" VerticalAlignment="Center" Width="50" Height="50" IsActive="{Binding UserControlDataContext.ImageLoading, ElementName=ucRoot}"/>
-                        <TextBlock HorizontalAlignment="Center" TextWrapping="Wrap" Text="Failed to load image!" VerticalAlignment="Center" FontSize="24" Visibility="{Binding UserControlDataContext.ImageFailed, Converter={StaticResource BooleanToVisibilityConverter}, ElementName=ucRoot}"/>
-                        <Image x:Name="_img" ImageOpened="_img_ImageOpened" ImageFailed="_img_ImageFailed"/>
-                        <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}" Visibility="{Binding UserControlDataContext.ShowNSFWWarning, Converter={StaticResource BooleanToVisibilityConverter}, ElementName=ucRoot}">
-                            <TextBlock HorizontalAlignment="Center" TextWrapping="Wrap" Text="NSFW Content" VerticalAlignment="Center" FontSize="24"/>
-                        </Grid>
+
+    <ScrollViewer Name="_outerSv" Loaded="_outerSv_Loaded" ViewChanged="_outerSv_ViewChanged" SizeChanged="_outerSv_SizeChanged" HorizontalScrollBarVisibility="Hidden" VerticalScrollBarVisibility="Hidden">
+        <StackPanel>
+            <Grid Height="60">
+                <TextBlock x:Name="textBlock1" HorizontalAlignment="Center" VerticalAlignment="Center" Opacity="0" Text="pull to close" FontSize="24" />
+            </Grid>
+            <ScrollViewer Name="_sv" ZoomMode="Enabled" HorizontalScrollBarVisibility="Hidden" VerticalScrollBarVisibility="Hidden" MinZoomFactor="0.75" Width="{Binding ActualWidth, ElementName=_outerSv}" Height="{Binding ActualHeight, ElementName=_outerSv}">
+                <Grid Name="_imgGrid" HorizontalAlignment="Center">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto"/>
+                    </Grid.ColumnDefinitions>
+                    <ProgressRing HorizontalAlignment="Center" VerticalAlignment="Center" Width="50" Height="50" IsActive="{Binding UserControlDataContext.ImageLoading, ElementName=ucRoot}"/>
+                    <TextBlock HorizontalAlignment="Center" TextWrapping="Wrap" Text="Failed to load image!" VerticalAlignment="Center" FontSize="24" Visibility="{Binding UserControlDataContext.ImageFailed, Converter={StaticResource BooleanToVisibilityConverter}, ElementName=ucRoot}"/>
+                    <Image x:Name="_img" ImageOpened="_img_ImageOpened" ImageFailed="_img_ImageFailed"/>
+                    <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}" Visibility="{Binding UserControlDataContext.ShowNSFWWarning, Converter={StaticResource BooleanToVisibilityConverter}, ElementName=ucRoot}">
+                        <TextBlock HorizontalAlignment="Center" TextWrapping="Wrap" Text="NSFW Content" VerticalAlignment="Center" FontSize="24"/>
                     </Grid>
-                </ScrollViewer>
-                <ListView Name="_galleryList" Width="{Binding ActualWidth, ElementName=_outerSv}" Height="180" SelectionMode="Single" IsSwipeEnabled="False" Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
+                </Grid>
+            </ScrollViewer>
+            <ListView Name="_galleryList" Width="{Binding ActualWidth, ElementName=_outerSv}" Height="180" SelectionMode="Single" IsSwipeEnabled="False" Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
                               Visibility="{Binding UserControlDataContext.ShowGalleryList, Converter={StaticResource BooleanToVisibilityConverter}, ElementName=ucRoot}"
                               ScrollViewer.HorizontalScrollMode="Enabled" ScrollViewer.HorizontalScrollBarVisibility="Hidden">
-                    <ListView.Resources>
-                        <ItemsPanelTemplate x:Key="ItemsPanelTemplate1">
-                            <ItemsStackPanel Orientation="Horizontal" />
-                        </ItemsPanelTemplate>
-                        <DataTemplate x:Key="DataTemplate1">
-                            <Grid HorizontalAlignment="Left" Width="240" Height="180">
-                                <Border Background="{ThemeResource ListViewItemPlaceholderBackgroundThemeBrush}">
-                                    <Image Source="{Binding ThumbnailLink}" Stretch="Uniform"/>
-                                </Border>
-                            </Grid>
-                        </DataTemplate>
-                    </ListView.Resources>
-                    <ListView.ItemTemplate>
-                        <StaticResource ResourceKey="DataTemplate1"/>
-                    </ListView.ItemTemplate>
-                    <ListView.ItemsPanel>
-                        <StaticResource ResourceKey="ItemsPanelTemplate1"/>
-                    </ListView.ItemsPanel>
-                </ListView>
-            </StackPanel>
-        </ScrollViewer>
-    </Grid>
+                <ListView.Resources>
+                    <ItemsPanelTemplate x:Key="ItemsPanelTemplate1">
+                        <ItemsStackPanel Orientation="Horizontal" />
+                    </ItemsPanelTemplate>
+                    <DataTemplate x:Key="DataTemplate1">
+                        <Grid HorizontalAlignment="Left" Width="240" Height="180">
+                            <Border Background="{ThemeResource ListViewItemPlaceholderBackgroundThemeBrush}">
+                                <Image Source="{Binding ThumbnailLink}" Stretch="Uniform"/>
+                            </Border>
+                        </Grid>
+                    </DataTemplate>
+                </ListView.Resources>
+                <ListView.ItemTemplate>
+                    <StaticResource ResourceKey="DataTemplate1"/>
+                </ListView.ItemTemplate>
+                <ListView.ItemsPanel>
+                    <StaticResource ResourceKey="ItemsPanelTemplate1"/>
+                </ListView.ItemsPanel>
+            </ListView>
+        </StackPanel>
+    </ScrollViewer>
 </UserControl>

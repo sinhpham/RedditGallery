@@ -59,9 +59,7 @@
             <FlipView ItemsSource="{Binding Images}" SelectedItem="{Binding SelectedItem, Mode=TwoWay}">
                 <FlipView.ItemTemplate>
                     <DataTemplate>
-                        <Grid>
-                            <local:RedditImageUserControl/>
-                        </Grid>
+                        <local:RedditImageUserControl/>
                     </DataTemplate>
                 </FlipView.ItemTemplate>
             </FlipView>

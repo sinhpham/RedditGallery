@@ -25,9 +25,6 @@ namespace RedditGallery.Views
         {
             this.InitializeComponent();
 
-            _rootGrid.Width = Window.Current.Bounds.Width;
-            _rootGrid.Height = Window.Current.Bounds.Height;
-
             _img.MaxWidth = Window.Current.Bounds.Width;
             _img.MaxHeight = Window.Current.Bounds.Height;
 
@@ -67,6 +64,7 @@ namespace RedditGallery.Views
                 {
                     Windows.UI.Core.CoreWindow.GetForCurrentThread().Dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.Normal, () =>
                     {
+                        _galleryList.ClearValue(ListView.SelectedItemProperty);
                         App.MainVM.OnNeedToGoBack();
                     });
                 }
@@ -85,7 +83,6 @@ namespace RedditGallery.Views
         private void _img_ImageOpened(object sender, RoutedEventArgs e)
         {
             UserControlDataContext["ImageLoading"] = false;
-            _imgGrid.Width = _img.ActualWidth != 0 ? _img.ActualWidth : _imgGrid.Width;
         }
 
         private void _img_ImageFailed(object sender, ExceptionRoutedEventArgs e)

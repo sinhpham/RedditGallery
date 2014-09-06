@@ -79,7 +79,7 @@ namespace RedditGallery.Models
                         linkedImg = galleryUrls[0];
                     }
 
-                    // Modify UI, so we need to run this on UI thread.
+                    // Modify UI, so need to run this on UI thread.
                     CoreApplication.MainView.CoreWindow.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
                     {
                         item.DisplayingImage = linkedImg;
