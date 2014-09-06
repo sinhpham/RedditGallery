@@ -185,16 +185,21 @@ namespace RedditGallery.Views
         }
     }
 
-    public class NSFWTemplateSelector : DataTemplateSelector
+    public class ThumbnailTemplateSelector : DataTemplateSelector
     {
-        public DataTemplate NSFWTemplate { get; set; }
         public DataTemplate NormalTemplate { get; set; }
+        public DataTemplate AlbumTemplate { get; set; }
+        public DataTemplate NSFWTemplate { get; set; }
         protected override DataTemplate SelectTemplateCore(object item)
         {
             var ri = (RedditImage)item;
             if (ri.NSFW && App.SettingVM.FilterNSFW)
             {
                 return NSFWTemplate;
+            }
+            if (ri.GalleryImages != null && ri.GalleryImages.Count > 0)
+            {
+                return AlbumTemplate;
             }
             return NormalTemplate;
         }
