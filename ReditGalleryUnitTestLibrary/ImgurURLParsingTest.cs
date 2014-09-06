@@ -36,5 +36,11 @@ namespace ReditGalleryUnitTestLibrary
             Assert.AreEqual(extractRet.Item1.ImageLink, "http://imgur.com/gallery/MpoHLv0");
             Assert.AreEqual(extractRet.Item1.ThumbnailLink, null);
         }
+
+        [TestMethod]
+        public void AlbumImgLink()
+        {
+            var res = ImgUrlExtractor.Extract("http://imgur.com/a/4zD5s").Result;
+        }
     }
 }

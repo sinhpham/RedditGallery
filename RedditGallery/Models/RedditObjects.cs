@@ -142,7 +142,13 @@ namespace RedditGallery.Models
                             var imgDivs = htmlDoc.DocumentNode.Descendants().Where(n => n.Name == "div" && n.Attributes.FirstOrDefault(a => a.Name == "class" && a.Value == "image") != null);
                             galleryUrls = imgDivs.Select(iDiv =>
                             {
-                                var imgLink = string.Format("http://i.imgur.com/{0}.jpg", iDiv.Id);
+                                var imgNode = iDiv.Descendants().Where(n => n.Name == "img");
+                                if (imgNode.Count() != 1)
+                                {
+                                    Debug.WriteLine("Error in parsing");
+                                }
+                                
+                                var imgLink = string.Format("http:{0}", imgNode.First().GetAttributeValue("data-src", "not found"));
                                 return new InternetImage()
                                 {
                                     ImageLink = imgLink,
