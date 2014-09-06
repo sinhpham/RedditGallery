@@ -25,7 +25,7 @@ namespace RedditGallery.ViewModels
 
         protected void OnPropertyChanged(string propertyName)
         {
-            var eventHandler = this.PropertyChanged;
+            var eventHandler = PropertyChanged;
             if (eventHandler != null)
             {
                 eventHandler(this, new PropertyChangedEventArgs(propertyName));

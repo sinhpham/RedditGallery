@@ -67,8 +67,7 @@ namespace RedditGallery.Views
                 {
                     Windows.UI.Core.CoreWindow.GetForCurrentThread().Dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.Normal, () =>
                     {
-                        //navigationHelper.GoBackCommand.Execute(null);
-                        Debug.WriteLine("Need to go back");
+                        App.MainVM.OnNeedToGoBack();
                     });
                 }
                 _isPullRefresh = false;

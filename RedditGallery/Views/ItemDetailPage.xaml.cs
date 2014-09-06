@@ -56,6 +56,11 @@ namespace RedditGallery.Views
             this.navigationHelper.LoadState += navigationHelper_LoadState;
 
             PageDataContext["ShowBackButton"] = false;
+
+            App.MainVM.NeedToGoBack += (s, arg) =>
+            {
+                NavigationHelper.GoBackCommand.Execute(null);
+            };
         }
 
         /// <summary>

@@ -196,6 +196,17 @@ namespace RedditGallery.ViewModels
         {
             get { return _subReddits; }
         }
+
+
+        public event EventHandler NeedToGoBack;
+        public void OnNeedToGoBack()
+        {
+            var eh = NeedToGoBack;
+            if (eh != null)
+            {
+                eh(this, EventArgs.Empty);
+            }
+        }
     }
 
     public class PaginatedCollection<T> : ObservableCollection<T>, ISupportIncrementalLoading
