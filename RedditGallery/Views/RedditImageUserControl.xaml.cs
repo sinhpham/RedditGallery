@@ -93,6 +93,11 @@ namespace RedditGallery.Views
 
         private void ucRoot_DataContextChanged(FrameworkElement sender, DataContextChangedEventArgs args)
         {
+            // Reset image specific settings.
+            UserControlDataContext["ShowGalleryList"] = false;
+            _sv.ChangeView(null, null, 1);
+            _galleryList.ClearValue(ListView.SelectedItemProperty);
+
             var currImg = this.DataContext as RedditGallery.Models.RedditImage;
             if (currImg == null)
             {
