@@ -269,7 +269,9 @@
                             <Border Background="{ThemeResource ListViewItemPlaceholderBackgroundThemeBrush}">
                                 <Image Source="{Binding DisplayingImage.ThumbnailLink}" Stretch="Uniform"/>
                             </Border>
-                            <TextBlock Visibility="{Binding HasMultipleImages, Converter={StaticResource BooleanToVisibilityConverter}}" HorizontalAlignment="Left" VerticalAlignment="Top" FontFamily="Segoe UI Symbol" Text="&#xE154;" FontSize="32"/>
+                            <Border HorizontalAlignment="Left" VerticalAlignment="Top" Background="#333D3D3D" >
+                            	<TextBlock Visibility="{Binding HasMultipleImages, Converter={StaticResource BooleanToVisibilityConverter}}" FontFamily="Segoe UI Symbol" Text="&#xE154;" FontSize="32"/>
+                            </Border>
                         </Grid>
                     </DataTemplate>
                     <DataTemplate x:Key="DataTemplate3">
