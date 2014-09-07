@@ -110,10 +110,36 @@ namespace RedditGallery.Views
 
         #endregion
 
-
+        DateTimeOffset _lastPointerMovedTime;
+        object _locker = new object();
         private void pageRoot_PointerMoved(object sender, PointerRoutedEventArgs e)
         {
-            PageDataContext["ShowBackButton"] = true;
+            if (e.Pointer.PointerDeviceType == Windows.Devices.Input.PointerDeviceType.Mouse || e.Pointer.PointerDeviceType == Windows.Devices.Input.PointerDeviceType.Pen)
+            {
+                PageDataContext["ShowBackButton"] = true;
+
+                lock (_locker)
+                {
+                    _lastPointerMovedTime = DateTimeOffset.Now;
+                }
+
+                var timer = new DispatcherTimer();
+                timer.Tick += (s, arg) =>
+                {
+                    var currTime = DateTimeOffset.Now;
+                    TimeSpan ts;
+                    lock (_locker)
+                    {
+                        ts = currTime - _lastPointerMovedTime;
+                    }
+                    if (ts.CompareTo(TimeSpan.FromSeconds(3)) > 0)
+                    {
+                        PageDataContext["ShowBackButton"] = false;
+                    }
+                };
+                timer.Interval = TimeSpan.FromSeconds(3);
+                timer.Start();
+            }
         }
     }
 }
