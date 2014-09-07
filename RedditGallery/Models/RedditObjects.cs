@@ -25,7 +25,7 @@ namespace RedditGallery.Models
         public InternetImage DisplayingImage
         {
             get { return _displayingImage; }
-            set { SetProperty(ref _displayingImage, value); }
+            set { SetProperty(ref _displayingImage, value); OnPropertyChanged("HasMultipleImages"); }
         }
         public string Title { get; set; }
         public string Permalink { get; set; }
@@ -33,6 +33,14 @@ namespace RedditGallery.Models
         public bool NSFW { get; set; }
 
         public List<InternetImage> GalleryImages { get; set; }
+
+        public bool HasMultipleImages
+        {
+            get
+            {
+                return GalleryImages != null && GalleryImages.Count > 0;
+            }
+        }
     }
 
     public static class RedditImageParser

@@ -22,7 +22,7 @@
             <Grid Height="60">
                 <TextBlock x:Name="textBlock1" HorizontalAlignment="Center" VerticalAlignment="Center" Opacity="0" Text="pull to close" FontSize="24" />
             </Grid>
-            <ScrollViewer Name="_sv" ZoomMode="Enabled" HorizontalScrollBarVisibility="Hidden" VerticalScrollBarVisibility="Hidden" MinZoomFactor="0.75" Width="{Binding ActualWidth, ElementName=_outerSv}" Height="{Binding ActualHeight, ElementName=_outerSv}">
+            <ScrollViewer Name="_sv" ZoomMode="Enabled" HorizontalScrollBarVisibility="Hidden" VerticalScrollBarVisibility="Hidden" MinZoomFactor="0.75">
                 <Grid Name="_imgGrid" HorizontalAlignment="Center">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="Auto"/>

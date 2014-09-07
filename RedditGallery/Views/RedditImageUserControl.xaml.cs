@@ -77,6 +77,8 @@ namespace RedditGallery.Views
         {
             _sv.Width = e.NewSize.Width;
             _sv.Height = e.NewSize.Height;
+            _img.MaxWidth = e.NewSize.Width;
+            _img.MaxHeight = e.NewSize.Height;
             _outerSv.ChangeView(null, 60.0f, null);
         }
 
@@ -127,6 +129,11 @@ namespace RedditGallery.Views
                     _galleryList.SetBinding(ListView.ItemsSourceProperty, isBinding);
                     var currItemBinding = new Binding { Path = new PropertyPath("DisplayingImage"), Mode = BindingMode.TwoWay };
                     _galleryList.SetBinding(ListView.SelectedItemProperty, currItemBinding);
+
+                    _galleryList.SelectionChanged += (s, arg) =>
+                    {
+                        UserControlDataContext["ImageLoading"] = true;
+                    };
                 }
             }
         }

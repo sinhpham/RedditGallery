@@ -11,6 +11,7 @@
     mc:Ignorable="d">
 
     <Page.Resources>
+        <common:BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"/>
         <Storyboard x:Name="_hideMenu">
             <DoubleAnimation
               Storyboard.TargetName="_content"
@@ -268,14 +269,7 @@
                             <Border Background="{ThemeResource ListViewItemPlaceholderBackgroundThemeBrush}">
                                 <Image Source="{Binding DisplayingImage.ThumbnailLink}" Stretch="Uniform"/>
                             </Border>
-                        </Grid>
-                    </DataTemplate>
-                    <DataTemplate x:Key="DataTemplate2">
-                        <Grid HorizontalAlignment="Left" Width="240" Height="180">
-                            <Border Background="{ThemeResource ListViewItemPlaceholderBackgroundThemeBrush}">
-                                <Image Source="{Binding DisplayingImage.ThumbnailLink}" Stretch="Uniform"/>
-                            </Border>
-                            <TextBlock HorizontalAlignment="Left" VerticalAlignment="Top" FontFamily="Segoe UI Symbol" Text="&#xE154;" FontSize="32"/>
+                            <TextBlock Visibility="{Binding HasMultipleImages, Converter={StaticResource BooleanToVisibilityConverter}}" HorizontalAlignment="Left" VerticalAlignment="Top" FontFamily="Segoe UI Symbol" Text="&#xE154;" FontSize="32"/>
                         </Grid>
                     </DataTemplate>
                     <DataTemplate x:Key="DataTemplate3">
@@ -285,7 +279,7 @@
             				</Border>
             			</Grid>
             		</DataTemplate>
-                    <local:ThumbnailTemplateSelector NormalTemplate="{StaticResource DataTemplate1}" AlbumTemplate="{StaticResource DataTemplate2}" NSFWTemplate="{StaticResource DataTemplate3}" x:Key="templateSelector" />
+                    <local:ThumbnailTemplateSelector NormalTemplate="{StaticResource DataTemplate1}" NSFWTemplate="{StaticResource DataTemplate3}" x:Key="templateSelector" />
             	</GridView.Resources>
                 
                 <GridView.ItemTemplateSelector>
