@@ -67,13 +67,18 @@ namespace RedditGallery
         {
             SettingsPane.GetForCurrentView().CommandsRequested += (s, e) =>
             {
-                var generalSettingCmd = new SettingsCommand("general", "General",
-                    (handler) =>
-                    {
-                        var sf = new AppSettingsFlyout();
-                        sf.Show();
-                    });
+                var generalSettingCmd = new SettingsCommand("general", "General", handler =>
+                {
+                    var sf = new AppSettingsFlyout();
+                    sf.Show();
+                });
+                var aboutSettingCmd = new SettingsCommand("about", "About", handler =>
+                {
+                    var about = new AboutSettingFlyout();
+                    about.Show();
+                });
                 e.Request.ApplicationCommands.Add(generalSettingCmd);
+                e.Request.ApplicationCommands.Add(aboutSettingCmd);
             };
 
 
