@@ -27,6 +27,7 @@ namespace RedditGallery.Models
             get { return _displayingImage; }
             set { SetProperty(ref _displayingImage, value); }
         }
+        public string Title { get; set; }
         public string Permalink { get; set; }
         public string OriginalUrl { get; set; }
         public bool NSFW { get; set; }
@@ -57,11 +58,12 @@ namespace RedditGallery.Models
                 var itemObject = jVal.GetObject()["data"].GetObject();
                 var item = new RedditImage()
                 {
+                    Title = System.Net.WebUtility.HtmlDecode(itemObject["title"].GetString()),
                     Permalink = "http://reddit.com" + itemObject["permalink"].GetString(),
                     OriginalUrl = itemObject["url"].GetString(),
                     NSFW = itemObject["over_18"].GetBoolean(),
                 };
-                
+
                 // Parser task here to determine the correct image and album
                 Task.Run(async () =>
                 {
@@ -84,7 +86,7 @@ namespace RedditGallery.Models
                     {
                         item.DisplayingImage = linkedImg;
                     });
-                    
+
                     item.GalleryImages = galleryUrls;
                 });
 
@@ -147,7 +149,7 @@ namespace RedditGallery.Models
                                 {
                                     Debug.WriteLine("Error in parsing");
                                 }
-                                
+
                                 var imgLink = string.Format("http:{0}", imgNode.First().GetAttributeValue("data-src", "not found"));
                                 return new InternetImage()
                                 {

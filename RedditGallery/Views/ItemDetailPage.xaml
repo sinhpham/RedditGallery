@@ -14,6 +14,11 @@
     <Page.Resources>
         <common:BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"/>
     </Page.Resources>
+    <Page.TopAppBar>
+        <AppBar>
+            <TextBlock Text="{Binding SelectedItem.Title}" Margin="39,0,0,0" FontSize="16" Height="Auto" VerticalAlignment="Center" HorizontalAlignment="Left"/>
+        </AppBar>
+    </Page.TopAppBar>
 
     <Page.BottomAppBar>
         <CommandBar>
