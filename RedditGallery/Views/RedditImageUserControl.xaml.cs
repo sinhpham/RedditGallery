@@ -133,9 +133,17 @@ namespace RedditGallery.Views
                     _galleryList.SelectionChanged += (s, arg) =>
                     {
                         UserControlDataContext["ImageLoading"] = true;
+                        _outerSv.ChangeView(null, 60.0f, null);
+                        _sv.ChangeView(null, null, 1);
                     };
                 }
             }
+        }
+
+        private void _sv_Tapped(object sender, TappedRoutedEventArgs e)
+        {
+            _outerSv.ChangeView(null, 60.0f, null);
+            _sv.ChangeView(null, null, 1);
         }
     }
 }
