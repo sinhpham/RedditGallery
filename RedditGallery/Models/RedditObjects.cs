@@ -64,6 +64,12 @@ namespace RedditGallery.Models
             ret = jArr.AsParallel().Select(jVal =>
             {
                 var itemObject = jVal.GetObject()["data"].GetObject();
+                var tentativeThumbnail = itemObject["thumbnail"].GetString();
+                
+                if (!Uri.IsWellFormedUriString(tentativeThumbnail, UriKind.Absolute)) {
+                    return null;
+                }
+
                 var item = new RedditImage()
                 {
                     Title = System.Net.WebUtility.HtmlDecode(itemObject["title"].GetString()),
@@ -99,7 +105,7 @@ namespace RedditGallery.Models
                 });
 
                 return item;
-            }).ToList();
+            }).Where(item => item != null).ToList();
 
             return ret;
         }
