@@ -17,7 +17,7 @@
     </UserControl.Resources>
 
 
-    <ScrollViewer Name="_outerSv" Loaded="_outerSv_Loaded" ViewChanged="_outerSv_ViewChanged" SizeChanged="_outerSv_SizeChanged" HorizontalScrollBarVisibility="Hidden" VerticalScrollBarVisibility="Hidden">
+    <ScrollViewer Name="_outerSv" Loaded="_outerSv_Loaded" ViewChanged="_outerSv_ViewChanged" SizeChanged="_outerSv_SizeChanged" HorizontalScrollBarVisibility="Hidden" VerticalScrollBarVisibility="Hidden" ZoomMode="Disabled">
         <StackPanel>
             <Grid Height="60">
                 <TextBlock x:Name="textBlock1" HorizontalAlignment="Center" VerticalAlignment="Center" Opacity="0" Text="pull to close" FontSize="24" />
