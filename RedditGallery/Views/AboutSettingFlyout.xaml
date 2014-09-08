@@ -27,6 +27,9 @@
                     Developed by Sinh Pham
                 </TextBlock.Text>
             </TextBlock>
+            <HyperlinkButton HorizontalAlignment="Stretch" VerticalAlignment="Stretch" NavigateUri="mailto:phamansinh@gmail.com?subject=RedditGallery%20Windows">
+                <TextBlock TextWrapping="Wrap">Contact author: phamansinh@gmail.com</TextBlock>
+			</HyperlinkButton>
 
         </StackPanel>
 
