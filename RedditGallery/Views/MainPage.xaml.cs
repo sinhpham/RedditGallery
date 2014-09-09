@@ -187,11 +187,16 @@ namespace RedditGallery.Views
         private void itemGridView_Loaded(object sender, RoutedEventArgs e)
         {
             var sv = itemGridView.GetFirstDescendantOfType<ScrollViewer>();
+
             sv.ViewChanged += (s, arg) =>
             {
-                if ((bool)PageDataContext[MenuOpenedKey])
+                // If this is because of changing sub reddit, do not hide the menu.
+                if (sv.HorizontalOffset != 0)
                 {
-                    PageDataContext[MenuOpenedKey] = false;
+                    if ((bool)PageDataContext[MenuOpenedKey])
+                    {
+                        PageDataContext[MenuOpenedKey] = false;
+                    }
                 }
             };
         }
