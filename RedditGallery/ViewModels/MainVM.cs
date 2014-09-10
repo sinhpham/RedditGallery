@@ -17,28 +17,6 @@ namespace RedditGallery.ViewModels
     {
         public MainVM()
         {
-            _images = new PaginatedCollection<RedditImage>(async (pc, count) =>
-            {
-                var retList = new List<RedditImage>();
-                if (string.Equals("null", pc.NextPath, StringComparison.Ordinal))
-                {
-                    return retList;
-                }
-
-                var link = pc.NextPath != null ?
-                    string.Format("http://www.reddit.com/r/{0}/new.json?after={1}&limit={2}", SubReddit, pc.NextPath, count) :
-                    string.Format("http://www.reddit.com/r/{0}/new.json?limit={1}", SubReddit, count);
-
-                var hc = new HttpClient();
-                var jsonText = await hc.GetStringAsync(link);
-
-                string newNextPath;
-                retList = RedditImageParser.ParseFromJson(jsonText, out newNextPath);
-                pc.NextPath = newNextPath;
-
-                return retList;
-            });
-
             var subList = Utils.Deserialize<List<string>>(App.SettingVM.SubList);
 
             foreach (var sub in subList)
@@ -60,6 +38,7 @@ namespace RedditGallery.ViewModels
         public PaginatedCollection<RedditImage> Images
         {
             get { return this._images; }
+            set { SetProperty(ref _images, value); }
         }
 
         RedditImage _selectedImg;
@@ -146,15 +125,12 @@ namespace RedditGallery.ViewModels
                 {
                     _refreshCmd = new RelayCommand(() =>
                     {
-                        _images.Clear();
-                        Images.NextPath = null;
-                        Images.HasMoreItems = true;
+                        Images = new PaginatedCollection<RedditImage>(LoadRedditImages);
                     });
                 }
                 return _refreshCmd;
             }
         }
-
 
         public bool IsInFav
         {
@@ -208,12 +184,34 @@ namespace RedditGallery.ViewModels
                 eh(this, EventArgs.Empty);
             }
         }
+
+        async Task<IEnumerable<RedditImage>> LoadRedditImages(PaginatedCollection<RedditImage> collection, uint count)
+        {
+            var retList = new List<RedditImage>();
+            if (string.Equals("null", collection.NextPath, StringComparison.Ordinal))
+            {
+                return retList;
+            }
+
+            var link = collection.NextPath != null ?
+                string.Format("http://www.reddit.com/r/{0}/new.json?after={1}&limit={2}", SubReddit, collection.NextPath, count) :
+                string.Format("http://www.reddit.com/r/{0}/new.json?limit={1}", SubReddit, count);
+
+            var hc = new HttpClient();
+            var jsonText = await hc.GetStringAsync(link);
+
+            string newNextPath;
+            retList = RedditImageParser.ParseFromJson(jsonText, out newNextPath);
+            collection.NextPath = newNextPath;
+
+            return retList;
+        }
     }
 
     public class PaginatedCollection<T> : ObservableCollection<T>, ISupportIncrementalLoading
     {
         private Func<PaginatedCollection<T>, uint, Task<IEnumerable<T>>> load;
-        public bool HasMoreItems { get; set; }
+        public bool HasMoreItems { get; private set; }
 
         public string NextPath { get; set; }
 
