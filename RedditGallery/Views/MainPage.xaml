@@ -200,7 +200,7 @@
                 <RowDefinition Height="*"/>
                 <RowDefinition Height="Auto"/>
             </Grid.RowDefinitions>
-            <TextBlock Text="Reddit Gallery" FontSize="32" Margin="26,20,25,0" HorizontalAlignment="Center" Grid.ColumnSpan="2"/>
+            <TextBlock Text="Photo Glider" FontSize="32" Margin="26,20,25,0" HorizontalAlignment="Center" Grid.ColumnSpan="2"/>
             <ListView Name="_subList" Grid.Row="1" ItemsSource="{Binding SubReddits}" SelectionChanged="ListView_SelectionChanged" Grid.ColumnSpan="2" CanReorderItems="True" AllowDrop="True">
                 <ListView.Resources>
                     <Style x:Key="ListViewItemStyle1" TargetType="ListViewItem">
@@ -301,7 +301,7 @@
                 <AppBarToggleButton Icon="List" Style="{StaticResource AppBarToggleButtonStyle1}" VerticalAlignment="Center" IsChecked="{Binding PageDataContext.MenuOpened, ElementName=pageRoot, Mode=TwoWay}" Margin="20,0"/>
                 <TextBlock x:Name="pageTitle" Text="{Binding SubReddit, Mode=TwoWay}" FontSize="32" Grid.Column="1" 
                         TextWrapping="NoWrap" VerticalAlignment="Center" IsHitTestVisible="False"/>
-                <Button Grid.Column="2" Content="Sort" FontFamily="Global User Interface" >
+                <!--Button Grid.Column="2" Content="Sort" FontFamily="Global User Interface" >
                     <Button.Flyout>
                         <MenuFlyout>
                             <MenuFlyoutItem Text="New"/>
@@ -310,7 +310,7 @@
                             <MenuFlyoutItem Text="Controversial"/>
                         </MenuFlyout>
                     </Button.Flyout>
-                </Button>
+                </>
                 <Button Grid.Column="3" Content="Time" >
                     <Button.Flyout>
                         <MenuFlyout>
@@ -321,7 +321,7 @@
                             <MenuFlyoutItem Text="All"/>
                         </MenuFlyout>
                     </Button.Flyout>
-                </Button>
+                </Button-->
             </Grid>
         </Grid>
     </Grid>

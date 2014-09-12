@@ -59,7 +59,7 @@ namespace RedditGallery.ViewModels
         {
             get
             {
-                var defaultList = new List<string> { "pics", "carporn", "earthporn" };
+                var defaultList = new List<string> { "pics", "art", "aww", "carporn", "earthporn", "spaceporn", "QuotesPorn" };
                 var json = Utils.Serialize(defaultList);
                 return GetSettingValueOrDefault(json);
             }
