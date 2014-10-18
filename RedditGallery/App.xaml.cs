@@ -77,8 +77,13 @@ namespace RedditGallery
                     var about = new AboutSettingFlyout();
                     about.Show();
                 });
+				var ppSettingCmd = new SettingsCommand("pp", "Privacy Policy", handler =>
+                {
+                    // TODO
+                });
                 e.Request.ApplicationCommands.Add(generalSettingCmd);
                 e.Request.ApplicationCommands.Add(aboutSettingCmd);
+				e.Request.ApplicationCommands.Add(ppSettingCmd);
             };
 
 
