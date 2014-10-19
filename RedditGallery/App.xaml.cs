@@ -79,7 +79,7 @@ namespace RedditGallery
                 });
 				var ppSettingCmd = new SettingsCommand("pp", "Privacy Policy", handler =>
                 {
-                    // TODO
+                    Windows.System.Launcher.LaunchUriAsync(new System.Uri("http://sinhpham.github.io/PhotoGlider/"));
                 });
                 e.Request.ApplicationCommands.Add(generalSettingCmd);
                 e.Request.ApplicationCommands.Add(aboutSettingCmd);
